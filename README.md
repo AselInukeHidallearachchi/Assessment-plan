@@ -19,5 +19,4 @@ cd "week-1"
 python3 -m http.server 5500
 ```
 
-Then visit `http://localhost:5500/src/pages/screen-1.html`.
-
+Then visit `http://localhost:5501/src/pages/screen-1.html`.
