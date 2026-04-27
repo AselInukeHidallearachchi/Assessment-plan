@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Screen 1 — Analytics Dashboard</title>
+    <link rel="stylesheet" href="../styles/base.css" />
+    <link rel="stylesheet" href="../styles/components.css" />
+    <link rel="stylesheet" href="../styles/screen-1.css" />
+  </head>
+  <body>
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <div class="brand">
+          <div class="brand__mark" aria-hidden="true"></div>
+          <div class="brand__text">
+            <div class="brand__name">Pulse</div>
+            <div class="brand__tag">Weekly insights</div>
+          </div>
+        </div>
+
+        <nav class="topbar__nav" aria-label="Primary">
+          <a class="navlink navlink--active" href="./screen-1.html">Dashboard</a>
+          <a class="navlink" href="./screen-2.html">Sign in</a>
+          <a class="navlink" href="#reports">Reports</a>
+          <a class="navlink" href="#billing">Billing</a>
+        </nav>
+
+        <div class="topbar__actions">
+          <div class="search" role="search">
+            <label class="sr-only" for="q">Search</label>
+            <input id="q" class="search__input" placeholder="Search… (try “revenue”)" />
+            <span class="search__hint" aria-hidden="true"><span class="kbd">⌘</span> <span class="kbd">K</span></span>
+          </div>
+          <button class="btn btn--ghost" type="button" aria-label="Notifications">
+            <span aria-hidden="true">🔔</span>
+            <span class="badge" aria-hidden="true">3</span>
+          </button>
+          <div class="avatar" aria-label="Account" role="img">AH</div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="container main">
+      <section class="hero">
+        <div class="hero__copy">
+          <h1 class="hero__title">Team performance at a glance</h1>
+          <p class="hero__subtitle">
+            A clean, responsive layout focusing on structure, readability, and consistent naming.
+          </p>
+          <div class="meta">
+            <span class="pill">Period: Last 7 days</span>
+            <span class="pill">Timezone: Asia/Kolkata</span>
+            <span class="pill">Status: Live</span>
+          </div>
+        </div>
+        <div class="hero__cta">
+          <button class="btn btn--primary" type="button">Export report</button>
+          <button class="btn" type="button">Create goal</button>
+        </div>
+      </section>
+
+      <section class="kpis" aria-label="Key metrics">
+        <article class="card kpi">
+          <div class="kpi__top">
+            <h2 class="kpi__label">Revenue</h2>
+            <span class="chip"><span aria-hidden="true">▲</span> 12.4%</span>
+          </div>
+          <div class="kpi__value">$48,920</div>
+          <div class="kpi__hint">vs. $43,520 last week</div>
+        </article>
+
+        <article class="card kpi">
+          <div class="kpi__top">
+            <h2 class="kpi__label">Active users</h2>
+            <span class="chip"><span aria-hidden="true">▲</span> 6.1%</span>
+          </div>
+          <div class="kpi__value">3,204</div>
+          <div class="kpi__hint">+184 new signups</div>
+        </article>
+
+        <article class="card kpi">
+          <div class="kpi__top">
+            <h2 class="kpi__label">Conversion</h2>
+            <span class="chip"><span aria-hidden="true">▼</span> 1.3%</span>
+          </div>
+          <div class="kpi__value">4.7%</div>
+          <div class="kpi__hint">Landing → Trial</div>
+        </article>
+
+        <article class="card kpi">
+          <div class="kpi__top">
+            <h2 class="kpi__label">Incidents</h2>
+            <span class="chip"><span aria-hidden="true">●</span> stable</span>
+          </div>
+          <div class="kpi__value">0</div>
+          <div class="kpi__hint">SLA: 99.95%</div>
+        </article>
+      </section>
+
+      <section class="grid" aria-label="Dashboard content">
+        <section class="card panel panel--chart" aria-labelledby="traffic-title">
+          <header class="panel__header">
+            <div>
+              <h2 id="traffic-title" class="panel__title">Traffic overview</h2>
+              <p class="panel__subtitle">Organic and paid sessions (mocked)</p>
+            </div>
+            <div class="panel__actions">
+              <button class="btn btn--ghost" type="button">7d</button>
+              <button class="btn btn--ghost" type="button">30d</button>
+              <button class="btn" type="button">Filters</button>
+            </div>
+          </header>
+          <hr class="divider" />
+          <div class="chart" role="img" aria-label="Line chart placeholder">
+            <div class="chart__legend">
+              <span class="chart__dot chart__dot--accent" aria-hidden="true"></span>
+              <span>Organic</span>
+              <span class="chart__dot chart__dot--green" aria-hidden="true"></span>
+              <span>Paid</span>
+            </div>
+            <div class="chart__canvas" aria-hidden="true">
+              <div class="chart__line chart__line--organic"></div>
+              <div class="chart__line chart__line--paid"></div>
+              <div class="chart__bars">
+                <span style="--h:42%"></span><span style="--h:58%"></span><span style="--h:50%"></span>
+                <span style="--h:66%"></span><span style="--h:62%"></span><span style="--h:71%"></span>
+                <span style="--h:63%"></span><span style="--h:78%"></span><span style="--h:72%"></span>
+                <span style="--h:84%"></span><span style="--h:76%"></span><span style="--h:88%"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="card panel panel--side" aria-labelledby="tasks-title">
+          <header class="panel__header">
+            <div>
+              <h2 id="tasks-title" class="panel__title">Today</h2>
+              <p class="panel__subtitle">Quick actions</p>
+            </div>
+          </header>
+          <hr class="divider" />
+
+          <div class="side">
+            <article class="side__item">
+              <div class="side__icon" aria-hidden="true">🎯</div>
+              <div class="side__content">
+                <div class="side__title">Set weekly goal</div>
+                <div class="side__desc">Keep metrics predictable.</div>
+              </div>
+              <button class="btn btn--ghost" type="button">Open</button>
+            </article>
+
+            <article class="side__item">
+              <div class="side__icon" aria-hidden="true">🧾</div>
+              <div class="side__content">
+                <div class="side__title">Review invoices</div>
+                <div class="side__desc">2 pending approvals.</div>
+              </div>
+              <button class="btn btn--ghost" type="button">View</button>
+            </article>
+
+            <article class="side__item">
+              <div class="side__icon" aria-hidden="true">🛡️</div>
+              <div class="side__content">
+                <div class="side__title">Security check</div>
+                <div class="side__desc">No risks detected.</div>
+              </div>
+              <button class="btn btn--ghost" type="button">Run</button>
+            </article>
+          </div>
+        </aside>
+
+        <section class="card panel panel--table" aria-labelledby="activity-title">
+          <header class="panel__header">
+            <div>
+              <h2 id="activity-title" class="panel__title">Recent activity</h2>
+              <p class="panel__subtitle">Readable table structure</p>
+            </div>
+            <div class="panel__actions">
+              <button class="btn" type="button">Download CSV</button>
+            </div>
+          </header>
+          <hr class="divider" />
+
+          <div class="table" role="region" aria-label="Activity table" tabindex="0">
+            <table class="table__inner">
+              <thead>
+                <tr>
+                  <th scope="col">Event</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">When</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Report exported</td>
+                  <td>Asel</td>
+                  <td><span class="status status--ok">Success</span></td>
+                  <td>5m ago</td>
+                </tr>
+                <tr>
+                  <td>Goal created</td>
+                  <td>Asel</td>
+                  <td><span class="status status--ok">Success</span></td>
+                  <td>1h ago</td>
+                </tr>
+                <tr>
+                  <td>Billing sync</td>
+                  <td>System</td>
+                  <td><span class="status status--warn">Queued</span></td>
+                  <td>3h ago</td>
+                </tr>
+                <tr>
+                  <td>Login attempt</td>
+                  <td>Client</td>
+                  <td><span class="status status--bad">Failed</span></td>
+                  <td>Yesterday</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <span>Week 1 assignment — semantic HTML + responsive CSS</span>
+        <span class="footer__sep" aria-hidden="true">•</span>
+        <a class="footer__link" href="./screen-2.html">Go to Sign in</a>
+      </div>
+    </footer>
+  </body>
+</html>
+

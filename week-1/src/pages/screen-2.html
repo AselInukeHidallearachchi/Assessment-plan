@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Screen 2 — Sign in</title>
+    <link rel="stylesheet" href="../styles/base.css" />
+    <link rel="stylesheet" href="../styles/components.css" />
+    <link rel="stylesheet" href="../styles/screen-2.css" />
+  </head>
+  <body>
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <header class="authbar">
+      <div class="container authbar__inner">
+        <a class="authbar__brand" href="./screen-1.html">
+          <span class="authbar__mark" aria-hidden="true"></span>
+          <span class="authbar__name">Pulse</span>
+        </a>
+        <nav class="authbar__nav" aria-label="Secondary">
+          <a class="navlink" href="./screen-1.html">Dashboard</a>
+          <a class="navlink navlink--active" href="./screen-2.html">Sign in</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="container auth">
+      <section class="auth__grid" aria-label="Sign in">
+        <section class="card auth__panel" aria-labelledby="title">
+          <header class="auth__header">
+            <h1 id="title" class="auth__title">Welcome back</h1>
+            <p class="auth__subtitle">
+              A second responsive screen focused on clean structure and readable forms.
+            </p>
+          </header>
+
+          <div class="auth__oauth" aria-label="Continue with provider">
+            <button class="btn auth__oauth-btn" type="button">
+              <span aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+            <button class="btn auth__oauth-btn" type="button">
+              <span aria-hidden="true">↗</span>
+              Continue with SSO
+            </button>
+          </div>
+
+          <div class="auth__or" role="separator" aria-label="or">
+            <span class="auth__or-line" aria-hidden="true"></span>
+            <span class="auth__or-text">or</span>
+            <span class="auth__or-line" aria-hidden="true"></span>
+          </div>
+
+          <form class="auth__form" action="#" method="post">
+            <div class="field">
+              <label class="field__label" for="email">Email</label>
+              <input class="field__input" id="email" name="email" type="email" autocomplete="email" placeholder="name@company.com" required />
+            </div>
+
+            <div class="field">
+              <div class="auth__row">
+                <label class="field__label" for="password">Password</label>
+                <a class="auth__link" href="#reset">Forgot?</a>
+              </div>
+              <input class="field__input" id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+            </div>
+
+            <div class="auth__row auth__row--center">
+              <label class="check">
+                <input class="check__input" type="checkbox" name="remember" />
+                <span class="check__box" aria-hidden="true"></span>
+                <span class="check__text">Remember me</span>
+              </label>
+              <span class="pill">Tip: use a password manager</span>
+            </div>
+
+            <button class="btn btn--primary auth__submit" type="submit">Sign in</button>
+
+            <p class="auth__foot">
+              New here? <a class="auth__link" href="#signup">Create an account</a>
+            </p>
+          </form>
+        </section>
+
+        <aside class="auth__aside" aria-label="Information">
+          <div class="card auth-aside">
+            <h2 class="auth-aside__title">Why this screen?</h2>
+            <ul class="auth-aside__list">
+              <li><strong>Semantic structure</strong> with landmarks and headings</li>
+              <li><strong>Accessible form</strong> labels, focus states, and tap targets</li>
+              <li><strong>Responsive layout</strong> that stacks cleanly on mobile</li>
+              <li><strong>Readable CSS</strong> using consistent component classes</li>
+            </ul>
+            <hr class="divider" />
+            <div class="auth-aside__meta">
+              <div class="auth-aside__stat">
+                <div class="auth-aside__stat-val">2</div>
+                <div class="auth-aside__stat-label">screens</div>
+              </div>
+              <div class="auth-aside__stat">
+                <div class="auth-aside__stat-val">1</div>
+                <div class="auth-aside__stat-label">design system</div>
+              </div>
+              <div class="auth-aside__stat">
+                <div class="auth-aside__stat-val">0</div>
+                <div class="auth-aside__stat-label">frameworks</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <span>Need a tour?</span>
+        <span class="footer__sep" aria-hidden="true">•</span>
+        <a class="footer__link" href="./screen-1.html">Back to Dashboard</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
