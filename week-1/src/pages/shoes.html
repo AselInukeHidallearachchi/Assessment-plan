@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Great Shoes Inc.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/shoes.css" />
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container hero-spacing">
+      <h1 class="primary-title">Amazing shoes at an amazing price</h1>
+      <p class="hero-text">Comfort, style, and performance perfectly balanced for your everyday life.</p>
+      <a href="#products" class="btn">See what we have</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Featured Grid -->
+    <section class="featured">
+      <div class="container">
+        <h2 class="section-title">Featured products</h2>
+        <div class="split">
+          <a href="#" class="featured__item">
+            <img src="../assets/shoe-4.png" alt="Black running shoe" class="featured__img">
+            <p class="featured__details"><span class="price">$99</span>Night Runner</p>
+          </a>
+          <a href="#" class="featured__item">
+            <img src="../assets/shoe-5.png" alt="White urban shoe" class="featured__img">
+            <p class="featured__details"><span class="price">$120</span>Urban White</p>
+          </a>
+          <a href="#" class="featured__item">
+            <img src="../assets/shoe-6.png" alt="Blue sports shoe" class="featured__img">
+            <p class="featured__details"><span class="price">$110</span>Ocean Streak</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Showcase (Shape-outside wrap) -->
+    <section id="products" class="our-products">
+      <div class="container">
+        <h2 class="section-title">Our products</h2>
+
+        <article class="product shoe-red">
+          <img src="../assets/shoe-1.png" alt="Red high top shoe" class="product__image">
+          <h3 class="product__title">High Top Red</h3>
+          <p class="product__description">Classic styling meets modern comfort. This premium red high-top features a tailored fit and breathable fabrics to keep you moving comfortably all day.</p>
+          <a href="#" class="btn btn-dark">Buy now</a>
+        </article>
+
+        <article class="product shoe-white shoe-left">
+          <img src="../assets/shoe-2.png" alt="White star shoe" class="product__image">
+          <h3 class="product__title">Classic Star</h3>
+          <p class="product__description">Step out with confidence. With an iconic star pattern and ergonomic sole design, this edition effortlessly combines street style with undeniable utility.</p>
+          <a href="#" class="btn btn-dark">Buy now</a>
+        </article>
+
+        <article class="product shoe-blue">
+          <img src="../assets/shoe-3.png" alt="Blue low top shoe" class="product__image">
+          <h3 class="product__title">Azure Low</h3>
+          <p class="product__description">Perfect for a quick dash or a long walk. The Azure Low is built from recycled materials to minimize impact on the environment while maximizing comfort.</p>
+          <a href="#" class="btn btn-dark">Buy now</a>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
