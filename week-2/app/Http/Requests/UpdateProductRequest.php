@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Product;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -12,7 +14,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,8 +24,28 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        /** @var Product $product */
+        $product = $this->route('product');
+
         return [
-            //
+            'name' => ['required', 'string', 'min:3', 'max:120'],
+            'sku' => ['required', 'string', 'max:64', 'alpha_dash', Rule::unique('products', 'sku')->ignore($product->id)],
+            'price' => ['required', 'numeric', 'min:0', 'max:99999999.99'],
+            'stock_qty' => ['required', 'integer', 'min:0', 'max:1000000'],
+            'status' => ['required', Rule::in(Product::statuses())],
+            'description' => ['nullable', 'string', 'max:5000'],
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'sku.unique' => 'This SKU is already in use. Please enter a different SKU.',
+            'status.in' => 'Status must be one of: draft, active, archived.',
+            'stock_qty.min' => 'Stock quantity cannot be negative.',
         ];
     }
 }
