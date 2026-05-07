@@ -1,10 +1,1 @@
-.DS_Store
-Thumbs.db
-
-# Editors
-.vscode/
-.idea/
-
-# Logs
-*.log
-
+Nothing should be ignored in this case, as the changes only include documentation files (.md) which are source/config files and not build artifacts, dependencies, or temporary files.
