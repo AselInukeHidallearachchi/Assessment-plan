@@ -12,7 +12,6 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'sku',
         'price',
         'stock_qty',
         'status',
@@ -27,9 +26,6 @@ class Product extends Model
         ];
     }
 
-    /**
-     * @return list<string>
-     */
     public static function statuses(): array
     {
         return [

@@ -11,9 +11,6 @@ class UpdateProductHandler
     {
     }
 
-    /**
-     * @param array<string, mixed> $payload
-     */
     public function __invoke(Product $product, array $payload): Product
     {
         return $this->productService->update($product, $payload);

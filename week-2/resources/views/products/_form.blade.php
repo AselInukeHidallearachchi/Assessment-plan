@@ -8,12 +8,6 @@
     @error('name') <div class="error">{{ $message }}</div> @enderror
 </div>
 
-<div class="field">
-    <label for="sku">SKU</label>
-    <input id="sku" name="sku" type="text" value="{{ old('sku', $product->sku ?? '') }}" required>
-    @error('sku') <div class="error">{{ $message }}</div> @enderror
-</div>
-
 <div class="row">
     <div class="field" style="flex:1; min-width:220px;">
         <label for="price">Price</label>

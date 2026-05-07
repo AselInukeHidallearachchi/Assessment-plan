@@ -10,7 +10,6 @@
     </div>
 
     <div class="card">
-        <p><strong>SKU:</strong> {{ $product->sku }}</p>
         <p><strong>Price:</strong> {{ number_format((float) $product->price, 2) }}</p>
         <p><strong>Stock:</strong> {{ $product->stock_qty }}</p>
         <p><strong>Status:</strong> {{ strtoupper($product->status) }}</p>

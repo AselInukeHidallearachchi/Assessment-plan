@@ -14,7 +14,6 @@ class ProductCrudTest extends TestCase
     {
         $response = $this->post(route('products.store'), [
             'name' => 'Trail Shoes',
-            'sku' => 'trl-001',
             'price' => 99.90,
             'stock_qty' => 15,
             'status' => Product::STATUS_ACTIVE,
@@ -25,7 +24,6 @@ class ProductCrudTest extends TestCase
 
         $this->assertDatabaseHas('products', [
             'name' => 'Trail Shoes',
-            'sku' => 'TRL-001',
             'status' => Product::STATUS_ACTIVE,
         ]);
     }
@@ -34,7 +32,6 @@ class ProductCrudTest extends TestCase
     {
         $response = $this->from(route('products.create'))->post(route('products.store'), [
             'name' => 'Trail Shoes',
-            'sku' => 'trl-002',
             'price' => 99.90,
             'stock_qty' => 15,
             'status' => 'invalid_status',
@@ -45,35 +42,10 @@ class ProductCrudTest extends TestCase
         $response->assertSessionHasErrors(['status']);
     }
 
-    public function test_create_fails_for_duplicate_sku(): void
-    {
-        Product::query()->create([
-            'name' => 'Existing Product',
-            'sku' => 'DUP-001',
-            'price' => 45.00,
-            'stock_qty' => 5,
-            'status' => Product::STATUS_DRAFT,
-            'description' => null,
-        ]);
-
-        $response = $this->from(route('products.create'))->post(route('products.store'), [
-            'name' => 'New Product',
-            'sku' => 'dup-001',
-            'price' => 99.90,
-            'stock_qty' => 15,
-            'status' => Product::STATUS_ACTIVE,
-            'description' => 'Duplicate SKU check',
-        ]);
-
-        $response->assertRedirect(route('products.create'));
-        $response->assertSessionHasErrors(['sku']);
-    }
-
     public function test_can_update_product(): void
     {
         $product = Product::query()->create([
             'name' => 'Old Name',
-            'sku' => 'OLD-001',
             'price' => 10.00,
             'stock_qty' => 2,
             'status' => Product::STATUS_DRAFT,
@@ -82,7 +54,6 @@ class ProductCrudTest extends TestCase
 
         $response = $this->put(route('products.update', $product), [
             'name' => ' Updated Product ',
-            'sku' => 'upd-001',
             'price' => 15.50,
             'stock_qty' => 10,
             'status' => Product::STATUS_ACTIVE,
@@ -94,7 +65,6 @@ class ProductCrudTest extends TestCase
         $this->assertDatabaseHas('products', [
             'id' => $product->id,
             'name' => 'Updated Product',
-            'sku' => 'UPD-001',
             'status' => Product::STATUS_ACTIVE,
         ]);
     }
@@ -103,7 +73,6 @@ class ProductCrudTest extends TestCase
     {
         $product = Product::query()->create([
             'name' => 'Delete Me',
-            'sku' => 'DEL-001',
             'price' => 10.00,
             'stock_qty' => 2,
             'status' => Product::STATUS_DRAFT,

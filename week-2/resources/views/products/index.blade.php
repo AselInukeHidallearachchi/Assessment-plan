@@ -11,7 +11,6 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>SKU</th>
                 <th>Price</th>
                 <th>Stock</th>
                 <th>Status</th>
@@ -22,7 +21,6 @@
             @forelse ($products as $product)
                 <tr>
                     <td>{{ $product->name }}</td>
-                    <td>{{ $product->sku }}</td>
                     <td>{{ number_format((float) $product->price, 2) }}</td>
                     <td>{{ $product->stock_qty }}</td>
                     <td>{{ strtoupper($product->status) }}</td>
@@ -38,7 +36,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="muted">No products found.</td>
+                    <td colspan="5" class="muted">No products found.</td>
                 </tr>
             @endforelse
             </tbody>

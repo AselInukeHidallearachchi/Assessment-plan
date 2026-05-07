@@ -11,9 +11,6 @@ class CreateProductHandler
     {
     }
 
-    /**
-     * @param array<string, mixed> $payload
-     */
     public function __invoke(array $payload): Product
     {
         return $this->productService->create($payload);
