@@ -1,22 +1,53 @@
-## Assessment Plan (Week 1)
+# Assessment Plan (Week 1 + Week 2)
 
-This repository contains my Week 1 deliverable for the **One Month Performance Improvement Plan**.
+This repository contains deliverables for the **One Month Performance Improvement Plan**.
 
-### What’s included
+## Completed Work
 
-- **`week-1/`**: HTML/CSS fundamentals assignment
-  - Two responsive UI screens
-  - Clean, consistent naming
-  - Structured, readable code and file organization
+### Week 1 - Fundamentals & Structure (Completed)
+Deliverables completed:
+- Two responsive UI screens built with semantic HTML/CSS
+- Clean folder structure and naming conventions
+- Readable componentized styling
 
-### How to review
+Primary files:
+- `week-1/src/pages/screen-1.html`
+- `week-1/src/pages/screen-2.html`
 
-- Open `week-1/src/pages/screen-1.html` and `week-1/src/pages/screen-2.html` in a browser.
-- Optional: use a local server (recommended) to avoid any browser restrictions:
+### Week 2 - Backend Basics & Validation (Completed)
+Deliverables completed:
+- Laravel project initialized in `week-2/`
+- Product Catalog CRUD implemented
+- Validation moved to Form Requests
+- Business logic separated into service layer
+- Use-case handlers introduced for clean orchestration
+- Blade CRUD views implemented
+- Feature tests added and passing
+- MySQL runtime configuration set up
+
+Primary files:
+- `week-2/app/Http/Controllers/ProductController.php`
+- `week-2/app/Handlers/Products/`
+- `week-2/app/Services/ProductService.php`
+- `week-2/app/Http/Requests/StoreProductRequest.php`
+- `week-2/app/Http/Requests/UpdateProductRequest.php`
+- `week-2/tests/Feature/ProductCrudTest.php`
+
+## Week 2 Run Instructions
 
 ```bash
-cd "week-1"
-python3 -m http.server 5500
+cd "/Users/aselinuke/Desktop/Assessment plan/week-2"
+php artisan config:clear
+php artisan migrate --force
+php artisan serve
 ```
 
-Then visit `http://localhost:5501/src/pages/screen-1.html`.
+Open:
+- `http://127.0.0.1:8000/products`
+
+## Week 2 Test Instructions
+
+```bash
+cd "/Users/aselinuke/Desktop/Assessment plan/week-2"
+php artisan test
+```
