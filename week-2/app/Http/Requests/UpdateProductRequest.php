@@ -9,6 +9,15 @@ use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'name' => is_string($this->name) ? trim($this->name) : $this->name,
+            'sku' => is_string($this->sku) ? strtoupper(trim($this->sku)) : $this->sku,
+            'description' => is_string($this->description) ? trim($this->description) : $this->description,
+        ]);
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      */
