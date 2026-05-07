@@ -51,14 +51,3 @@ Open:
 cd "/Users/aselinuke/Desktop/Assessment plan/week-2"
 php artisan test
 ```
-
-## Viva / Interview Preparation
-
-Comprehensive viva guide:
-- `week-2/WEEK2_VIVA_GUIDE.md`
-
-This includes:
-- Architecture explanations
-- likely viva questions and model answers
-- demo flow
-- command reference
