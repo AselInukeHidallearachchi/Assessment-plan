@@ -20,6 +20,7 @@
         .field input, .field select, .field textarea { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 8px; }
         .error { color: #b91c1c; font-size: 13px; margin-top: 4px; }
         .flash { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 10px 12px; border-radius: 8px; margin-bottom: 14px; }
+        .alert { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; padding: 10px 12px; border-radius: 8px; margin-bottom: 14px; }
         .hint { color: #6b7280; font-size: 13px; margin-top: 6px; }
         .muted { color: #6b7280; font-size: 14px; }
         .thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb; }
@@ -32,6 +33,10 @@
 <div class="container">
     @if (session('success'))
         <div class="flash">{{ session('success') }}</div>
+    @endif
+
+    @if ($errors->has('product'))
+        <div class="alert">{{ $errors->first('product') }}</div>
     @endif
 
     @yield('content')

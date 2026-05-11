@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ProductOperationException;
 use App\Handlers\Products\ProductHandler;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use DomainException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -32,7 +34,11 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request): RedirectResponse
     {
-        $product = $this->productHandler->create($request->validated());
+        try {
+            $product = $this->productHandler->create($request->validated());
+        } catch (ProductOperationException $exception) {
+            return $this->handleProductOperationException($exception);
+        }
 
         return redirect()
             ->route('products.show', $product)
@@ -64,6 +70,8 @@ class ProductController extends Controller
             return back()
                 ->withInput()
                 ->withErrors(['status' => $exception->getMessage()]);
+        } catch (ProductOperationException $exception) {
+            return $this->handleProductOperationException($exception);
         }
 
         return redirect()
@@ -73,10 +81,25 @@ class ProductController extends Controller
 
     public function destroy(Product $product): RedirectResponse
     {
-        $this->productHandler->delete($product);
+        try {
+            $this->productHandler->delete($product);
+        } catch (ProductOperationException $exception) {
+            return $this->handleProductOperationException($exception);
+        }
 
         return redirect()
             ->route('products.index')
             ->with('success', 'Product deleted successfully.');
+    }
+
+    private function handleProductOperationException(ProductOperationException $exception): RedirectResponse
+    {
+        Log::error($exception->getMessage(), [
+            'exception' => $exception,
+        ]);
+
+        return back()
+            ->withInput()
+            ->withErrors(['product' => $exception->getMessage()]);
     }
 }

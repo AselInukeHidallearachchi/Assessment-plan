@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Exceptions\ProductOperationException;
 use App\Models\Product;
 use DomainException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class ProductService
 {
@@ -15,11 +17,17 @@ class ProductService
         $payload = $this->normalize($attributes);
         $image = Arr::pull($payload, 'image');
 
-        if ($image instanceof UploadedFile) {
-            $payload['image_path'] = $this->storeImage($image);
-        }
+        try {
+            if ($image instanceof UploadedFile) {
+                $payload['image_path'] = $this->storeImage($image);
+            }
 
-        return Product::create($payload);
+            return Product::create($payload);
+        } catch (Throwable $exception) {
+            $this->deleteImage($payload['image_path'] ?? null);
+
+            throw ProductOperationException::forAction('create', $exception);
+        }
     }
 
     public function update(Product $product, array $attributes): Product
@@ -29,20 +37,37 @@ class ProductService
 
         $this->assertStatusTransitionIsAllowed($product, (string) $payload['status']);
 
-        if ($image instanceof UploadedFile) {
-            $this->deleteImage($product->image_path);
-            $payload['image_path'] = $this->storeImage($image);
+        try {
+            if ($image instanceof UploadedFile) {
+                $payload['image_path'] = $this->storeImage($image);
+            }
+
+            $previousImagePath = $product->image_path;
+
+            $product->update($payload);
+
+            if ($image instanceof UploadedFile) {
+                $this->deleteImage($previousImagePath);
+            }
+
+            return $product->refresh();
+        } catch (Throwable $exception) {
+            if (isset($payload['image_path'])) {
+                $this->deleteImage($payload['image_path']);
+            }
+
+            throw ProductOperationException::forAction('update', $exception);
         }
-
-        $product->update($payload);
-
-        return $product->refresh();
     }
 
     public function delete(Product $product): void
     {
-        $this->deleteImage($product->image_path);
-        $product->delete();
+        try {
+            $this->deleteImage($product->image_path);
+            $product->delete();
+        } catch (Throwable $exception) {
+            throw ProductOperationException::forAction('delete', $exception);
+        }
     }
 
     private function normalize(array $attributes): array
