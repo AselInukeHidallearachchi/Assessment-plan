@@ -10,6 +10,9 @@
     </div>
 
     <div class="card">
+        @if ($product->image_path)
+            <img class="product-image" src="{{ asset('storage/'.$product->image_path) }}" alt="{{ $product->name }}">
+        @endif
         <p><strong>Price:</strong> {{ number_format((float) $product->price, 2) }}</p>
         <p><strong>Stock:</strong> {{ $product->stock_qty }}</p>
         <p><strong>Status:</strong> {{ strtoupper($product->status) }}</p>

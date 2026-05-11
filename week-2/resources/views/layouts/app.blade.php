@@ -20,7 +20,12 @@
         .field input, .field select, .field textarea { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 8px; }
         .error { color: #b91c1c; font-size: 13px; margin-top: 4px; }
         .flash { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 10px 12px; border-radius: 8px; margin-bottom: 14px; }
+        .hint { color: #6b7280; font-size: 13px; margin-top: 6px; }
         .muted { color: #6b7280; font-size: 14px; }
+        .thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb; }
+        .placeholder-thumb { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border: 1px dashed #d1d5db; border-radius: 8px; color: #6b7280; font-size: 12px; text-align: center; }
+        .preview-image { display: block; width: 120px; height: 120px; object-fit: cover; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 10px; }
+        .product-image { width: min(100%, 420px); max-height: 320px; object-fit: cover; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 14px; }
     </style>
 </head>
 <body>

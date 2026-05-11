@@ -16,6 +16,7 @@ class Product extends Model
         'stock_qty',
         'status',
         'description',
+        'image_path',
     ];
 
     protected function casts(): array

@@ -10,6 +10,7 @@
         <table>
             <thead>
             <tr>
+                <th>Image</th>
                 <th>Name</th>
                 <th>Price</th>
                 <th>Stock</th>
@@ -20,6 +21,13 @@
             <tbody>
             @forelse ($products as $product)
                 <tr>
+                    <td>
+                        @if ($product->image_path)
+                            <img class="thumb" src="{{ asset('storage/'.$product->image_path) }}" alt="{{ $product->name }}">
+                        @else
+                            <span class="placeholder-thumb">No image</span>
+                        @endif
+                    </td>
                     <td>{{ $product->name }}</td>
                     <td>{{ number_format((float) $product->price, 2) }}</td>
                     <td>{{ $product->stock_qty }}</td>
@@ -36,7 +44,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="muted">No products found.</td>
+                    <td colspan="6" class="muted">No products found.</td>
                 </tr>
             @endforelse
             </tbody>

@@ -40,6 +40,16 @@
     @error('description') <div class="error">{{ $message }}</div> @enderror
 </div>
 
+<div class="field">
+    <label for="image">Product Image</label>
+    @if ($isEdit && $product->image_path)
+        <img class="preview-image" src="{{ asset('storage/'.$product->image_path) }}" alt="{{ $product->name }}">
+    @endif
+    <input id="image" name="image" type="file" accept="image/png,image/jpeg,image/webp">
+    <div class="hint">Accepted: JPG, PNG, WEBP. Maximum size: 2MB.</div>
+    @error('image') <div class="error">{{ $message }}</div> @enderror
+</div>
+
 <div class="row">
     <button class="btn btn-primary" type="submit">{{ $isEdit ? 'Update Product' : 'Create Product' }}</button>
     <a class="btn" href="{{ route('products.index') }}">Cancel</a>
