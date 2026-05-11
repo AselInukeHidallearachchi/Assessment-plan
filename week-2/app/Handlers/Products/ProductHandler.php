@@ -4,7 +4,7 @@ namespace App\Handlers\Products;
 
 use App\Models\Product;
 use App\Services\ProductService;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class ProductHandler
 {
@@ -12,9 +12,12 @@ class ProductHandler
     {
     }
 
-    public function list(): LengthAwarePaginator
+    public function list(): Paginator
     {
-        return Product::query()->latest('id')->paginate(10);
+        return Product::query()
+            ->select(['id', 'name', 'price', 'stock_qty', 'status', 'image_path', 'created_at'])
+            ->latest('id')
+            ->simplePaginate(10);
     }
 
     public function create(array $payload): Product
