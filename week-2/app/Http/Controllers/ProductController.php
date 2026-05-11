@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Handlers\Products\CreateProductHandler;
-use App\Handlers\Products\DeleteProductHandler;
-use App\Handlers\Products\ListProductsHandler;
-use App\Handlers\Products\ShowProductHandler;
-use App\Handlers\Products\UpdateProductHandler;
+use App\Handlers\Products\ProductHandler;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
@@ -16,10 +12,14 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    public function index(ListProductsHandler $listProducts): View
+    public function __construct(private readonly ProductHandler $productHandler)
+    {
+    }
+
+    public function index(): View
     {
         return view('products.index', [
-            'products' => $listProducts(),
+            'products' => $this->productHandler->list(),
         ]);
     }
 
@@ -30,19 +30,19 @@ class ProductController extends Controller
         ]);
     }
 
-    public function store(StoreProductRequest $request, CreateProductHandler $createProduct): RedirectResponse
+    public function store(StoreProductRequest $request): RedirectResponse
     {
-        $product = $createProduct($request->validated());
+        $product = $this->productHandler->create($request->validated());
 
         return redirect()
             ->route('products.show', $product)
             ->with('success', 'Product created successfully.');
     }
 
-    public function show(Product $product, ShowProductHandler $showProduct): View
+    public function show(Product $product): View
     {
         return view('products.show', [
-            'product' => $showProduct($product),
+            'product' => $this->productHandler->show($product),
         ]);
     }
 
@@ -57,10 +57,9 @@ class ProductController extends Controller
     public function update(
         UpdateProductRequest $request,
         Product $product,
-        UpdateProductHandler $updateProduct,
     ): RedirectResponse {
         try {
-            $updatedProduct = $updateProduct($product, $request->validated());
+            $updatedProduct = $this->productHandler->update($product, $request->validated());
         } catch (DomainException $exception) {
             return back()
                 ->withInput()
@@ -72,9 +71,9 @@ class ProductController extends Controller
             ->with('success', 'Product updated successfully.');
     }
 
-    public function destroy(Product $product, DeleteProductHandler $deleteProduct): RedirectResponse
+    public function destroy(Product $product): RedirectResponse
     {
-        $deleteProduct($product);
+        $this->productHandler->delete($product);
 
         return redirect()
             ->route('products.index')
