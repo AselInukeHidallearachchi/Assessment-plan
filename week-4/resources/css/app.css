@@ -1,0 +1,74 @@
+@import 'tailwindcss';
+
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+@source '../../app/**/*.php';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views*.blade.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-background: #f8fafc;
+    --color-foreground: #0f172a;
+    --color-card: #ffffff;
+    --color-card-foreground: #0f172a;
+    --color-popover: #ffffff;
+    --color-popover-foreground: #0f172a;
+    --color-primary: #0f172a;
+    --color-primary-foreground: #f8fafc;
+    --color-secondary: #e2e8f0;
+    --color-secondary-foreground: #0f172a;
+    --color-muted: #f1f5f9;
+    --color-muted-foreground: #64748b;
+    --color-accent: #e0f2fe;
+    --color-accent-foreground: #075985;
+    --color-destructive: #dc2626;
+    --color-destructive-foreground: #ffffff;
+    --color-border: #e2e8f0;
+    --color-input: #cbd5e1;
+    --color-ring: #0284c7;
+}
+
+@layer base {
+    * {
+        border-color: var(--color-border);
+    }
+
+    body {
+        font-family: var(--font-sans);
+    }
+}
+
+@layer components {
+    .ticket-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .ticket-table th {
+        border-bottom: 1px solid var(--color-border);
+        padding: 0.875rem 1rem;
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-muted-foreground);
+    }
+
+    .ticket-table td {
+        border-bottom: 1px solid var(--color-border);
+        padding: 1rem;
+        vertical-align: top;
+    }
+
+    .ticket-table tbody tr {
+        transition: background-color 150ms ease;
+    }
+
+    .ticket-table tbody tr:hover {
+        background-color: rgba(224, 242, 254, 0.45);
+    }
+}

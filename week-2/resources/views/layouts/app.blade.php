@@ -4,32 +4,44 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Week 2 Product Catalog' }}</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; background: #f7f7fb; color: #1f2937; }
-        .container { max-width: 960px; margin: 0 auto; padding: 24px; }
-        .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; }
-        .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-        .between { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .btn { display: inline-block; border: 1px solid #d1d5db; background: #fff; color: #111827; text-decoration: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
-        .btn-primary { background: #111827; color: #fff; border-color: #111827; }
-        .btn-danger { background: #b91c1c; color: #fff; border-color: #b91c1c; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { text-align: left; border-bottom: 1px solid #e5e7eb; padding: 10px 8px; }
-        .field { margin-bottom: 14px; }
-        .field label { display: block; margin-bottom: 6px; font-weight: 600; }
-        .field input, .field select, .field textarea { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 8px; }
-        .error { color: #b91c1c; font-size: 13px; margin-top: 4px; }
-        .flash { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 10px 12px; border-radius: 8px; margin-bottom: 14px; }
-        .muted { color: #6b7280; font-size: 14px; }
-    </style>
-</head>
-<body>
-<div class="container">
-    @if (session('success'))
-        <div class="flash">{{ session('success') }}</div>
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
+</head>
+<body class="catalog-shell min-h-screen text-foreground antialiased">
+    <main class="mx-auto grid min-h-screen w-full max-w-7xl gap-6 px-4 py-6 lg:grid-cols-[18rem_minmax(0,1fr)] lg:px-8">
+        <aside class="catalog-frame rounded-[2rem] p-6 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)]">
+            <div class="flex h-full flex-col justify-between gap-10">
+                <div>
+                    <p class="text-xs font-black uppercase tracking-[0.34em] text-amber-400">Week 2</p>
+                    <a href="{{ route('products.index') }}" class="mt-4 block text-4xl font-black leading-none tracking-tight text-orange-50">
+                        Catalog<br>Control
+                    </a>
+                    <p class="mt-5 text-sm leading-6 text-stone-300">
+                        A complete data management system where users can create new entries, view existing ones, make updates, and delete them when no longer needed.
+                    </p>
+                </div>
 
-    @yield('content')
-</div>
+                <nav class="grid gap-3">
+                    <x-ui.button href="{{ route('products.index') }}" variant="outline">Inventory Board</x-ui.button>
+                    <x-ui.button href="{{ route('products.create') }}">Register Product</x-ui.button>
+                </nav>
+            </div>
+        </aside>
+
+        <section class="min-w-0 py-2">
+            @if (session('success'))
+                <x-ui.alert>{{ session('success') }}</x-ui.alert>
+            @endif
+
+            @if ($errors->has('product'))
+                <div class="mb-6 border border-red-500/40 bg-red-950/80 px-4 py-3 text-sm font-bold text-red-100 shadow-xl" role="alert">
+                    {{ $errors->first('product') }}
+                </div>
+            @endif
+
+            @yield('content')
+        </section>
+    </main>
 </body>
 </html>
