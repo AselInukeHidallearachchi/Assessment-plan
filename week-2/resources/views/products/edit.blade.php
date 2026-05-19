@@ -2,8 +2,8 @@
 
 @section('content')
     <x-ui.page-header
-        title="Edit Product"
-        description="Update catalog data while preserving the Product module's validation and business rules."
+        title="Revise Product"
+        description="Update catalog data while preserving validation, image handling, and archived-product business rules."
     >
         <x-ui.button href="{{ route('products.show', $product) }}" variant="outline">View Product</x-ui.button>
     </x-ui.page-header>

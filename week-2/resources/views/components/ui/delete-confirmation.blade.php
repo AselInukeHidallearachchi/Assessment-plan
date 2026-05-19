@@ -12,17 +12,17 @@
         {{ $triggerLabel }}
     </x-ui.button>
 
-    <dialog id="{{ $id }}" class="fixed inset-0 m-auto w-[min(92vw,28rem)] rounded-3xl border border-border bg-card p-0 text-card-foreground shadow-2xl backdrop:bg-slate-950/55">
+    <dialog id="{{ $id }}" class="fixed inset-0 m-auto w-[min(92vw,28rem)] border border-amber-900 bg-card p-0 text-card-foreground shadow-[16px_16px_0_rgba(120,53,15,0.42)] backdrop:bg-stone-950/70">
         <form method="post" action="{{ $action }}">
             @csrf
             @method('DELETE')
 
-            <div class="p-6">
+            <div class="border-b border-amber-950/20 bg-[#f4e4c4] p-6">
                 <h2 class="text-xl font-bold tracking-tight">{{ $title }}</h2>
                 <p class="mt-2 text-sm leading-6 text-muted-foreground">{{ $description }}</p>
             </div>
 
-            <div class="flex justify-end gap-2 border-t border-border bg-muted/50 p-4">
+            <div class="flex justify-end gap-2 bg-[#fff8ea] p-4">
                 <x-ui.button type="button" variant="outline" data-dialog-close="{{ $id }}">
                     Cancel
                 </x-ui.button>

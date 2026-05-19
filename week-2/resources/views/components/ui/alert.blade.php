@@ -1,3 +1,3 @@
-<div {{ $attributes->merge(['class' => 'mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800 shadow-sm']) }} role="status">
+<div {{ $attributes->merge(['class' => 'mb-6 border border-amber-400 bg-amber-200 px-4 py-3 text-sm font-black text-stone-950 shadow-[8px_8px_0_rgba(120,53,15,0.32)]']) }} role="status">
     {{ $slot }}
 </div>

@@ -44,9 +44,9 @@
 </div>
 
 @if ($isEdit && $product->image_path)
-    <div class="mt-5 rounded-2xl border border-border bg-muted/50 p-4">
-        <p class="mb-3 text-sm font-semibold text-foreground">Current Image</p>
-        <img class="h-32 w-32 rounded-xl border border-border object-cover" src="{{ asset('storage/'.$product->image_path) }}" alt="{{ $product->name }}">
+    <div class="mt-5 border border-amber-950/20 bg-[#f4e4c4] p-4">
+        <p class="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-700">Current Image</p>
+        <img class="h-32 w-32 border border-amber-950/30 object-cover shadow-[6px_6px_0_rgba(120,53,15,0.2)]" src="{{ asset('storage/'.$product->image_path) }}" alt="{{ $product->name }}">
     </div>
 @endif
 

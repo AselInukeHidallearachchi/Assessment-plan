@@ -15,7 +15,7 @@
         <header class="mb-8 flex flex-col gap-4 rounded-3xl border border-border/80 bg-card/90 p-5 shadow-sm backdrop-blur md:flex-row md:items-center md:justify-between">
             <div>
                 <a href="{{ route('tickets.index') }}" class="text-2xl font-black tracking-tight text-foreground">Support Desk</a>
-                <p class="mt-1 text-sm text-muted-foreground">Week 4 mini project · independent delivery simulation</p>
+                <p class="mt-1 text-sm text-muted-foreground">Week 4 mini project</p>
             </div>
 
             <nav class="flex items-center gap-2">
