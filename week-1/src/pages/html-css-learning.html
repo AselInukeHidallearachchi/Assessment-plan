@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML & CSS — Complete Learning Guide by Asel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #0f0e0d;
+      --paper:    #f5f2ed;
+      --cream:    #ede8df;
+      --accent:   #c84b2f;
+      --accent2:  #2563eb;
+      --green:    #16a34a;
+      --code-bg:  #1a1917;
+      --border:   #cfc8bc;
+      --muted:    #7a7469;
+      --tag:      #e8e2d9;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--paper); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 52px;
+      border-bottom: 2px solid var(--accent);
+    }
+    .logo { font-family:'Playfair Display',serif; font-size:1rem; color:#f5f2ed; letter-spacing:.04em; }
+    .logo span { color: var(--accent); }
+    .nav-r { display:flex; align-items:center; gap:1rem; }
+    .nav-r a { color:#9a9287; text-decoration:none; font-family:'DM Mono',monospace; font-size:.7rem; letter-spacing:.06em; transition:color .2s; }
+    .nav-r a:hover { color:var(--accent); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--ink); color: var(--paper);
+      padding: 5.5rem 2.5rem 4.5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content:'</>'; position:absolute; right:3rem; top:2rem;
+      font-family:'DM Mono',monospace; font-size:8rem; font-weight:500;
+      color:#ffffff07; line-height:1; pointer-events:none;
+    }
+    .hero-label { font-family:'DM Mono',monospace; font-size:.7rem; letter-spacing:.18em; color:var(--accent); text-transform:uppercase; margin-bottom:.8rem; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.4rem,5vw,4rem); font-weight:900; line-height:1.08; max-width:680px; }
+    .hero h1 em { color:var(--accent); font-style:normal; }
+    .hero p { margin-top:1.2rem; color:#9a9287; max-width:520px; font-size:1rem; }
+    .hero-stats { margin-top:2rem; display:flex; gap:2.5rem; flex-wrap:wrap; }
+    .stat { font-family:'DM Mono',monospace; font-size:.72rem; color:#6b6460; letter-spacing:.06em; }
+    .stat strong { color:#c9c2b5; display:block; font-size:1.1rem; margin-bottom:.1rem; }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-bar {
+      position:fixed; top:52px; left:0; height:2px;
+      background:var(--accent); z-index:199; width:0;
+      transition:width .1s;
+    }
+
+    /* ─── TOC ─── */
+    .toc-wrap { background:var(--cream); border-bottom:1px solid var(--border); padding:2.5rem; }
+    .toc-inner { max-width:960px; margin:0 auto; }
+    .toc-label { font-family:'DM Mono',monospace; font-size:.65rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:1.2rem; }
+    .toc-group { margin-bottom:1.4rem; }
+    .toc-group-title { font-family:'DM Mono',monospace; font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:.6rem; font-weight:500; }
+    .toc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:.45rem; }
+    .toc-item {
+      display:flex; align-items:center; gap:.5rem;
+      padding:.5rem .8rem; background:var(--paper);
+      border:1px solid var(--border); border-radius:4px;
+      text-decoration:none; color:var(--ink); font-size:.82rem;
+      transition:border-color .2s, transform .12s;
+    }
+    .toc-item:hover { border-color:var(--accent); transform:translateY(-1px); }
+    .toc-num { font-family:'DM Mono',monospace; font-size:.65rem; color:var(--accent); }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width:920px; margin:0 auto; padding:0 2.5rem; }
+    .section { padding:4rem 0; border-bottom:1px solid var(--border); }
+    .section-label { font-family:'DM Mono',monospace; font-size:.65rem; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin-bottom:.5rem; }
+    .section h2 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; line-height:1.2; margin-bottom:.8rem; }
+    .intro-text { color:#4a453f; max-width:640px; margin-bottom:1.8rem; font-size:.97rem; }
+    h3.sub { font-size:1rem; font-weight:600; margin:1.8rem 0 .7rem; color:var(--ink); }
+
+    /* ─── CODE BLOCK ─── */
+    .code-block { background:var(--code-bg); color:#e8e2d9; border-radius:8px; overflow:hidden; margin:1.2rem 0; box-shadow:0 4px 18px rgba(0,0,0,.14); }
+    .code-header { display:flex; align-items:center; justify-content:space-between; padding:.55rem 1.1rem; background:#252320; border-bottom:1px solid #333; }
+    .dots { display:flex; gap:5px; }
+    .dots span { width:9px; height:9px; border-radius:50%; }
+    .dots span:nth-child(1){background:#ff5f57} .dots span:nth-child(2){background:#febc2e} .dots span:nth-child(3){background:#28c840}
+    .code-title { font-family:'DM Mono',monospace; font-size:.65rem; color:#6a6460; letter-spacing:.08em; }
+    .code-block pre { padding:1.2rem 1.5rem; font-family:'DM Mono',monospace; font-size:.8rem; line-height:1.75; overflow-x:auto; white-space:pre; }
+    .t  { color:#79b8ff }   /* tag */
+    .a  { color:#ffab70 }   /* attr */
+    .v  { color:#9ecbff }   /* value */
+    .p  { color:#b392f0 }   /* property */
+    .n  { color:#79b8ff }   /* number/value */
+    .c  { color:#6a737d; font-style:italic } /* comment */
+    .s  { color:#f97583 }   /* selector */
+    .st { color:#9ecbff }   /* string */
+    .k  { color:#f97583 }   /* keyword */
+
+    /* ─── DEMO BOX ─── */
+    .demo { border:1.5px dashed var(--border); border-radius:8px; padding:1.8rem; background:#fff; margin:1rem 0 1.5rem; }
+    .demo-lbl { font-family:'DM Mono',monospace; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:1rem; display:flex; align-items:center; gap:.4rem; }
+    .demo-lbl::before { content:'▶'; color:var(--accent); font-size:.55rem; }
+
+    /* ─── CARDS ─── */
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:.9rem; margin:1.2rem 0; }
+    .card { background:var(--cream); border:1px solid var(--border); border-radius:8px; padding:1.2rem; }
+    .card-icon { font-size:1.3rem; margin-bottom:.5rem; }
+    .card h4 { font-family:'DM Mono',monospace; font-size:.8rem; font-weight:500; margin-bottom:.3rem; }
+    .card p { font-size:.83rem; color:var(--muted); line-height:1.55; }
+
+    /* ─── TABLE ─── */
+    .table-wrap { overflow-x:auto; margin:1.2rem 0; }
+    table { width:100%; border-collapse:collapse; font-size:.86rem; }
+    th { background:var(--ink); color:var(--paper); font-family:'DM Mono',monospace; font-size:.67rem; letter-spacing:.07em; text-align:left; padding:.65rem 1rem; font-weight:400; }
+    td { padding:.6rem 1rem; border-bottom:1px solid var(--border); vertical-align:top; }
+    tr:nth-child(even) td { background:var(--cream); }
+    td code, th code { font-family:'DM Mono',monospace; font-size:.76rem; background:#f0ebe4; padding:.12rem .35rem; border-radius:3px; }
+
+    /* ─── TAGS ─── */
+    .tags { display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.9rem; }
+    .tag { font-family:'DM Mono',monospace; font-size:.67rem; background:var(--tag); border:1px solid var(--border); border-radius:3px; padding:.12rem .5rem; color:var(--muted); }
+    .tag.r { background:#fce8e4; border-color:#e8b4ab; color:var(--accent); }
+    .tag.b { background:#e8f0fe; border-color:#b3ccfc; color:var(--accent2); }
+    .tag.g { background:#e6f4ea; border-color:#b6dfc0; color:var(--green); }
+
+    /* ─── TIP ─── */
+    .tip { display:flex; gap:.9rem; background:#fffbf0; border-left:3px solid #f5a623; border-radius:0 6px 6px 0; padding:.9rem 1.1rem; margin:1.2rem 0; font-size:.86rem; }
+    .tip-icon { font-size:1rem; flex-shrink:0; margin-top:.1rem; }
+    .tip strong { color:#b8820f; font-family:'DM Mono',monospace; font-size:.68rem; letter-spacing:.05em; display:block; margin-bottom:.2rem; text-transform:uppercase; }
+
+    .warn { background:#fff0f0; border-left-color:#e74c3c; }
+    .warn strong { color:#c0392b; }
+    .note { background:#f0f7ff; border-left-color:var(--accent2); }
+    .note strong { color:#1a56db; }
+
+    /* ─── SECTION DIVIDER ─── */
+    .chapter-divider {
+      background:var(--ink); color:var(--paper);
+      padding:2rem 2.5rem; margin:0;
+      display:flex; align-items:center; gap:1.5rem;
+    }
+    .chapter-divider .ch-num { font-family:'DM Mono',monospace; font-size:3rem; font-weight:300; color:#ffffff14; line-height:1; }
+    .chapter-divider h2 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; }
+    .chapter-divider p { color:#7a7469; font-size:.85rem; margin-top:.2rem; }
+
+    
+    /* DEMO-SPECIFIC STYLES */
+
+
+    /* Box model */
+    .bm-outer { background:#ef9a9a; display:inline-block; padding:18px; border-radius:4px; }
+    .bm-border { background:#ffb74d; padding:18px; border-radius:4px; }
+    .bm-pad { background:#fff59d; padding:16px; border-radius:4px; }
+    .bm-content { background:#a5d6a7; padding:10px 22px; border-radius:4px; font-family:'DM Mono',monospace; font-size:.82rem; font-weight:500; text-align:center; }
+    .bm-label { font-family:'DM Mono',monospace; font-size:.65rem; color:#7a7469; display:block; margin-bottom:6px; }
+
+    /* Flex */
+    .flex-row { display:flex; gap:.6rem; flex-wrap:wrap; background:#e8f5e9; padding:.9rem; border-radius:6px; }
+    .fi { background:#4caf50; color:white; font-family:'DM Mono',monospace; font-size:.75rem; padding:.45rem .9rem; border-radius:4px; }
+    .fi.grow { flex-grow:1; text-align:center; }
+    .fi.dark { background:#2e7d32; }
+
+    /* Grid */
+    .grid-demo { display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; background:#e3f2fd; padding:.9rem; border-radius:6px; }
+    .gi { background:#2196f3; color:white; font-family:'DM Mono',monospace; font-size:.73rem; padding:.55rem; border-radius:4px; text-align:center; }
+    .gi.span2 { grid-column:span 2; background:#1565c0; }
+    .gi.span3 { grid-column:span 3; background:#0d47a1; }
+
+    /* Colors */
+    .color-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.8rem 0; }
+    .chip { display:flex; flex-direction:column; align-items:center; gap:.25rem; font-family:'DM Mono',monospace; font-size:.62rem; color:var(--muted); }
+    .swatch { width:50px; height:38px; border-radius:5px; border:1px solid rgba(0,0,0,.08); }
+
+    /* Positioning */
+    .pos-parent { position:relative; background:#f3e5f5; height:120px; border-radius:6px; overflow:hidden; margin:.8rem 0; }
+    .pos-static  { background:#ce93d8; padding:.35rem .7rem; font-size:.74rem; font-family:'DM Mono',monospace; display:inline-block; }
+    .pos-rel     { position:relative; top:10px; left:16px; background:#9c27b0; color:white; padding:.35rem .7rem; font-size:.74rem; font-family:'DM Mono',monospace; display:inline-block; }
+    .pos-abs     { position:absolute; bottom:8px; right:8px; background:#4a148c; color:white; padding:.35rem .7rem; font-size:.74rem; font-family:'DM Mono',monospace; }
+
+    /* Buttons */
+    .btn-row { display:flex; flex-wrap:wrap; gap:.7rem; margin:.8rem 0; }
+    .btn { font-family:'DM Mono',monospace; font-size:.78rem; padding:.5rem 1.2rem; border-radius:4px; border:none; cursor:pointer; transition:all .2s; }
+    .btn-primary { background:var(--accent); color:white; }
+    .btn-primary:hover { background:#a53c24; transform:translateY(-1px); }
+    .btn-outline { background:transparent; border:1.5px solid var(--accent); color:var(--accent); }
+    .btn-outline:hover { background:var(--accent); color:white; }
+    .btn-ghost { background:var(--cream); color:var(--ink); border:1px solid var(--border); }
+    .btn-ghost:hover { background:var(--border); }
+    .btn-blue { background:var(--accent2); color:white; }
+    .btn-blue:hover { background:#1a4fc7; }
+    .btn-pill { border-radius:999px; background:#16a34a; color:white; }
+    .btn-icon { display:flex; align-items:center; gap:.4rem; background:#1a1917; color:#e8e2d9; border-radius:6px; }
+
+    /* Form styles */
+    .form-demo { display:flex; flex-direction:column; gap:.9rem; max-width:420px; }
+    .form-group { display:flex; flex-direction:column; gap:.3rem; }
+    .form-group label { font-size:.82rem; font-weight:500; color:var(--ink); }
+    .form-group input, .form-group select, .form-group textarea {
+      padding:.55rem .8rem; border:1.5px solid var(--border); border-radius:5px;
+      font-family:'DM Sans',sans-serif; font-size:.875rem; background:white;
+      transition:border-color .2s, box-shadow .2s; outline:none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color:var(--accent2); box-shadow:0 0 0 3px rgba(37,99,235,.12);
+    }
+    .form-group textarea { resize:vertical; min-height:80px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+    .form-check { display:flex; align-items:center; gap:.5rem; font-size:.875rem; }
+    .form-check input[type=checkbox], .form-check input[type=radio] { width:16px; height:16px; accent-color:var(--accent); }
+
+    /* HTML Table demo */
+    .html-table { width:100%; border-collapse:collapse; font-size:.86rem; }
+    .html-table th { background:var(--ink); color:var(--paper); padding:.6rem 1rem; text-align:left; font-weight:500; }
+    .html-table td { padding:.55rem 1rem; border-bottom:1px solid var(--border); }
+    .html-table tbody tr:nth-child(even) td { background:var(--cream); }
+    .html-table tbody tr:hover td { background:#e8e2d9; transition:background .15s; }
+    .html-table caption { font-family:'DM Mono',monospace; font-size:.72rem; color:var(--muted); text-align:left; padding:.5rem 0; margin-bottom:.3rem; letter-spacing:.06em; text-transform:uppercase; }
+
+    /* Lists */
+    .list-demo ul, .list-demo ol { padding-left:1.5rem; font-size:.9rem; }
+    .list-demo li { margin-bottom:.3rem; }
+    .list-cols { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+
+    /* Transitions */
+    .trans-box {
+      width:100%; height:70px; background:var(--accent);
+      border-radius:8px; display:flex; align-items:center; justify-content:center;
+      color:white; font-family:'DM Mono',monospace; font-size:.8rem;
+      cursor:pointer;
+      transition: background .4s ease, transform .3s ease, border-radius .3s ease;
+    }
+    .trans-box:hover { background:var(--accent2); transform:scaleX(0.95); border-radius:20px; }
+
+    /* Animations */
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.08);opacity:.8} }
+    @keyframes spin  { to{transform:rotate(360deg)} }
+    @keyframes slide { 0%{transform:translateX(-30px);opacity:0} 100%{transform:translateX(0);opacity:1} }
+    @keyframes bounce{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+    @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+    .anim-row { display:flex; flex-wrap:wrap; gap:.8rem; margin:.8rem 0; }
+    .anim-box {
+      width:90px; height:70px; border-radius:8px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      font-family:'DM Mono',monospace; font-size:.65rem; color:white; gap:.3rem;
+    }
+    .a-pulse  { background:#9c27b0; animation:pulse 2s ease-in-out infinite; }
+    .a-spin   { background:var(--accent); animation:spin 1.5s linear infinite; }
+    .a-bounce { background:#16a34a; animation:bounce .8s ease-in-out infinite; }
+    .a-slide  { background:var(--accent2); animation:slide .8s ease both; }
+    .a-shake  { background:#f59e0b; animation:shake .5s ease-in-out infinite; }
+
+    /* Transform */
+    .transform-grid { display:flex; flex-wrap:wrap; gap:1.2rem; padding:1rem 0; }
+    .tf-box {
+      width:80px; height:60px; border-radius:6px; background:var(--cream);
+      border:1.5px solid var(--border); display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      font-family:'DM Mono',monospace; font-size:.65rem; color:var(--muted);
+      gap:.3rem; transition:transform .3s;
+    }
+    .tf-box:hover { outline:2px solid var(--accent); }
+    .tf1 { transform:rotate(15deg); }
+    .tf2 { transform:scale(1.2); }
+    .tf3 { transform:skewX(10deg); }
+    .tf4 { transform:translateX(10px) translateY(-5px); }
+    .tf5 { transform:scaleX(0.7); }
+    .tf6 { transform:rotate(-10deg) scale(1.1); }
+
+    /* Shadows */
+    .shadow-row { display:flex; flex-wrap:wrap; gap:1.2rem; padding:.8rem 0; }
+    .shadow-box {
+      width:110px; height:80px; border-radius:8px; background:white;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      font-family:'DM Mono',monospace; font-size:.65rem; color:var(--muted); gap:.25rem;
+    }
+    .sh1 { box-shadow:2px 2px 4px rgba(0,0,0,.1); }
+    .sh2 { box-shadow:0 4px 12px rgba(0,0,0,.15); }
+    .sh3 { box-shadow:0 8px 30px rgba(0,0,0,.2); }
+    .sh4 { box-shadow:0 0 0 3px var(--accent); }
+    .sh5 { box-shadow:inset 0 2px 8px rgba(0,0,0,.15); background:#f0ebe4; }
+    .sh6 { box-shadow:4px 4px 0 var(--accent); }
+
+    /* Overflow */
+    .overflow-row { display:flex; gap:1rem; flex-wrap:wrap; margin:.8rem 0; }
+    .ov-box { width:160px; height:80px; background:#e8f5e9; border:1px solid #b6dfc0; border-radius:6px; padding:.6rem; font-size:.78rem; font-family:'DM Mono',monospace; }
+    .ov-hidden   { overflow:hidden; }
+    .ov-scroll   { overflow-y:scroll; }
+    .ov-auto     { overflow:auto; }
+
+    /* Pseudo */
+    .pseudo-demo a { color:var(--accent2); font-size:.9rem; margin-right:1rem; }
+    .pseudo-demo a:visited { color:purple; }
+    .pseudo-demo a:hover { text-decoration:none; color:var(--accent); }
+    .pseudo-demo p::first-letter { font-size:1.8rem; font-weight:700; float:left; line-height:1; margin-right:.15rem; color:var(--accent); font-family:'Playfair Display',serif; }
+    .pseudo-demo li::marker { color:var(--accent); font-weight:700; }
+    .pseudo-input { position:relative; }
+    .pseudo-input input::placeholder { color:#b0a898; font-style:italic; }
+
+    /* Units */
+    .unit-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:.7rem; margin:.8rem 0; }
+    .unit-card { background:var(--cream); border:1px solid var(--border); border-radius:6px; padding:.9rem; }
+    .unit-card .unit-name { font-family:'DM Mono',monospace; font-size:.82rem; font-weight:500; color:var(--accent); margin-bottom:.3rem; }
+    .unit-card p { font-size:.8rem; color:var(--muted); }
+
+    /* Background */
+    .bg-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:.7rem; margin:.8rem 0; }
+    .bg-box { height:80px; border-radius:8px; display:flex; align-items:flex-end; padding:.5rem .7rem; font-family:'DM Mono',monospace; font-size:.65rem; color:white; font-weight:500; }
+    .bg1 { background-color:#c84b2f; }
+    .bg2 { background:linear-gradient(135deg,#c84b2f,#f97316); }
+    .bg3 { background:linear-gradient(to right,#2563eb,#7c3aed); }
+    .bg4 { background:radial-gradient(circle,#16a34a,#0f172a); }
+    .bg5 { background:repeating-linear-gradient(45deg,#1a1917 0,#1a1917 10px,#252320 10px,#252320 20px); }
+    .bg6 { background:linear-gradient(135deg,#f97316 0%,#ec4899 50%,#8b5cf6 100%); }
+
+    /* Borders */
+    .border-row { display:flex; flex-wrap:wrap; gap:.9rem; margin:.8rem 0; }
+    .bdr { padding:.55rem 1.1rem; border-radius:5px; font-family:'DM Mono',monospace; font-size:.75rem; background:white; }
+    .bdr1 { border:2px solid var(--accent); }
+    .bdr2 { border:2px dashed var(--accent2); }
+    .bdr3 { border:3px dotted #16a34a; }
+    .bdr4 { border:3px double #9c27b0; }
+    .bdr5 { border:0; border-bottom:2px solid var(--accent); border-radius:0; }
+    .bdr6 { border:2px solid var(--border); border-radius:999px; }
+    .bdr7 { border:2px solid var(--border); border-radius:0 14px 0 14px; }
+    .bdr8 { border:2px solid transparent; background:linear-gradient(white,white) padding-box, linear-gradient(135deg,#c84b2f,#2563eb) border-box; }
+
+    /* Display values */
+    .disp-demo span { background:#e8f5e9; border:1px solid #b6dfc0; padding:.3rem .6rem; font-family:'DM Mono',monospace; font-size:.75rem; border-radius:3px; margin:.2rem; }
+    .disp-block { display:block; background:#e3f2fd !important; border-color:#90caf9 !important; margin:.3rem 0; }
+    .disp-inline { display:inline; }
+    .disp-ib { display:inline-block; width:80px; text-align:center; }
+    .disp-none { display:none; }
+
+    /* Z-index */
+    .z-parent { position:relative; height:100px; margin:.8rem 0; }
+    .z-box { position:absolute; width:80px; height:60px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:.72rem; font-weight:500; }
+    .z1 { background:#ef9a9a; top:10px; left:0;   z-index:1; }
+    .z2 { background:#ffb74d; top:20px; left:40px; z-index:2; }
+    .z3 { background:#4caf50; top:5px;  left:80px; z-index:3; color:white; }
+    .z4 { background:#2196f3; top:15px; left:120px;z-index:4; color:white; }
+
+    /* Filters */
+    .filter-row { display:flex; flex-wrap:wrap; gap:.8rem; margin:.8rem 0; }
+    .filter-box { width:110px; border-radius:8px; overflow:hidden; font-family:'DM Mono',monospace; font-size:.65rem; color:var(--muted); }
+    .filter-box .f-inner { height:60px; background:linear-gradient(135deg,#c84b2f,#2563eb); }
+    .filter-box .f-label { text-align:center; padding:.3rem 0; }
+    .fb1 .f-inner { filter:none; }
+    .fb2 .f-inner { filter:grayscale(1); }
+    .fb3 .f-inner { filter:blur(3px); }
+    .fb4 .f-inner { filter:sepia(1); }
+    .fb5 .f-inner { filter:brightness(1.5); }
+    .fb6 .f-inner { filter:contrast(2); }
+    .fb7 .f-inner { filter:hue-rotate(90deg); }
+    .fb8 .f-inner { filter:invert(1); }
+
+    /* Cursor */
+    .cursor-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.8rem 0; }
+    .cur { padding:.45rem .9rem; background:var(--cream); border:1px solid var(--border); border-radius:4px; font-family:'DM Mono',monospace; font-size:.74rem; }
+    .cur-pointer  { cursor:pointer; }
+    .cur-crosshair{ cursor:crosshair; }
+    .cur-grab     { cursor:grab; }
+    .cur-zoom     { cursor:zoom-in; }
+    .cur-text     { cursor:text; }
+    .cur-not      { cursor:not-allowed; }
+    .cur-wait     { cursor:wait; }
+    .cur-help     { cursor:help; }
+
+    /* Variables */
+    .var-demo { --brand:#c84b2f; --space:1rem; --radius:8px; background:var(--cream); padding:var(--space); border-radius:var(--radius); border:2px solid var(--brand); margin:.8rem 0; }
+    .var-demo p { font-family:'DM Mono',monospace; font-size:.8rem; }
+    .var-demo .var-swatch { display:inline-block; width:14px; height:14px; background:var(--brand); border-radius:2px; vertical-align:middle; margin-right:.3rem; }
+
+    /* Specificity meter */
+    .spec-row { display:flex; flex-direction:column; gap:.5rem; margin:.8rem 0; }
+    .spec-item { display:flex; align-items:center; gap:.8rem; font-size:.82rem; }
+    .spec-bar-wrap { flex:1; height:14px; background:#f0ebe4; border-radius:3px; overflow:hidden; }
+    .spec-bar { height:100%; border-radius:3px; background:var(--accent); transition:width .4s; }
+    .spec-label { font-family:'DM Mono',monospace; font-size:.72rem; width:180px; color:var(--ink); }
+    .spec-num { font-family:'DM Mono',monospace; font-size:.7rem; color:var(--muted); width:50px; text-align:right; }
+
+    /* Media query illustration */
+    .mq-demo { display:flex; gap:1rem; flex-wrap:wrap; margin:.8rem 0; }
+    .mq-device { border:2px solid var(--border); border-radius:8px; padding:.8rem; text-align:center; flex:1; min-width:100px; }
+    .mq-device .mq-icon { font-size:2rem; margin-bottom:.3rem; }
+    .mq-device .mq-label { font-family:'DM Mono',monospace; font-size:.65rem; color:var(--muted); }
+    .mq-device .mq-break { font-family:'DM Mono',monospace; font-size:.72rem; color:var(--accent); font-weight:500; }
+
+    /* Responsive live demo */
+    .rwd-box { background:linear-gradient(135deg,#e8f0fe,#fce8e4); padding:1.5rem; border-radius:8px; text-align:center; font-family:'DM Mono',monospace; font-size:.8rem; }
+    @media(max-width:600px) { .rwd-box { background:linear-gradient(135deg,#e6f4ea,#fff3e0); } }
+
+    /* Gradient text */
+    .grad-text { background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-weight:700; }
+
+    /* Opacity */
+    .opacity-row { display:flex; gap:.6rem; flex-wrap:wrap; margin:.8rem 0; }
+    .op-box { width:60px; height:50px; background:var(--accent); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:.65rem; color:white; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background:var(--ink); color:#6b6460;
+      text-align:center; padding:2.5rem;
+      font-family:'DM Mono',monospace; font-size:.75rem; letter-spacing:.05em;
+    }
+    footer strong { color:var(--paper); }
+    footer .ft-accent { color:var(--accent); }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    @keyframes heroFadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .hero h1 { animation:heroFadeUp .55s ease both; }
+    .hero p  { animation:heroFadeUp .55s .12s ease both; }
+    .hero-stats { animation:heroFadeUp .55s .22s ease both; }
+
+    /* Responsive */
+    @media(max-width:640px) {
+      .hero { padding:4rem 1.5rem 3.5rem; }
+      .hero::before { display:none; }
+      .container { padding:0 1.5rem; }
+      .toc-wrap { padding:2rem 1.5rem; }
+      nav { padding:0 1.5rem; }
+      .chapter-divider { padding:1.5rem; }
+      .chapter-divider .ch-num { display:none; }
+      .list-cols { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">&nbsp;<span>·</span>&nbsp; HTML &amp; CSS</div>
+  <div class="nav-r">
+    <a href="#html-chapter">HTML</a>
+    <a href="#css-chapter">CSS</a>
+    <a href="#layout-chapter">Layout</a>
+    <a href="#visual-chapter">Visual</a>
+    <a href="#advanced-chapter">Advanced</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-label">Complete Learning Portfolio</p>
+  <h1>HTML &amp; CSS:<br /><em>The Full Guide</em></h1>
+  <p>Every concept I have learned — from the bare HTML skeleton through advanced CSS techniques like animations, filters, variables, and responsive design.</p>
+  <div class="hero-stats">
+    <div class="stat"><strong>30+</strong> Concepts</div>
+    <div class="stat"><strong>5</strong> Chapters</div>
+    <div class="stat"><strong>HTML5</strong> · CSS3</div>
+    <div class="stat"><strong>Asel</strong> Author</div>
+  </div>
+</header>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc-wrap">
+  <div class="toc-inner">
+    <p class="toc-label">Contents</p>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Chapter 1 — HTML Foundations</div>
+      <div class="toc-grid">
+        <a href="#html-basics"    class="toc-item"><span class="toc-num">01</span> HTML Basics & Structure</a>
+        <a href="#html-semantic"  class="toc-item"><span class="toc-num">02</span> Semantic Elements</a>
+        <a href="#html-forms"     class="toc-item"><span class="toc-num">03</span> Forms & Inputs</a>
+        <a href="#html-tables"    class="toc-item"><span class="toc-num">04</span> Tables</a>
+        <a href="#html-lists"     class="toc-item"><span class="toc-num">05</span> Lists & Links</a>
+        <a href="#html-media"     class="toc-item"><span class="toc-num">06</span> Media & Attributes</a>
+      </div>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Chapter 2 — CSS Foundations</div>
+      <div class="toc-grid">
+        <a href="#css-basics"     class="toc-item"><span class="toc-num">07</span> CSS Basics</a>
+        <a href="#css-selectors"  class="toc-item"><span class="toc-num">08</span> Selectors</a>
+        <a href="#css-specificity"class="toc-item"><span class="toc-num">09</span> Specificity & Cascade</a>
+        <a href="#css-units"      class="toc-item"><span class="toc-num">10</span> Units</a>
+        <a href="#css-variables"  class="toc-item"><span class="toc-num">11</span> CSS Variables</a>
+      </div>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Chapter 3 — Layout</div>
+      <div class="toc-grid">
+        <a href="#box-model"      class="toc-item"><span class="toc-num">12</span> The Box Model</a>
+        <a href="#display"        class="toc-item"><span class="toc-num">13</span> Display Values</a>
+        <a href="#flexbox"        class="toc-item"><span class="toc-num">14</span> Flexbox</a>
+        <a href="#grid"           class="toc-item"><span class="toc-num">15</span> CSS Grid</a>
+        <a href="#positioning"    class="toc-item"><span class="toc-num">16</span> Positioning</a>
+        <a href="#zindex"         class="toc-item"><span class="toc-num">17</span> Z-index & Stacking</a>
+        <a href="#overflow"       class="toc-item"><span class="toc-num">18</span> Overflow</a>
+      </div>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Chapter 4 — Visual Styling</div>
+      <div class="toc-grid">
+        <a href="#typography"     class="toc-item"><span class="toc-num">19</span> Typography</a>
+        <a href="#colors"         class="toc-item"><span class="toc-num">20</span> Colors & Gradients</a>
+        <a href="#backgrounds"    class="toc-item"><span class="toc-num">21</span> Backgrounds</a>
+        <a href="#borders"        class="toc-item"><span class="toc-num">22</span> Borders & Radius</a>
+        <a href="#shadows"        class="toc-item"><span class="toc-num">23</span> Shadows</a>
+        <a href="#opacity"        class="toc-item"><span class="toc-num">24</span> Opacity & Visibility</a>
+        <a href="#filters"        class="toc-item"><span class="toc-num">25</span> Filters</a>
+        <a href="#cursor"         class="toc-item"><span class="toc-num">26</span> Cursor</a>
+      </div>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-title">Chapter 5 — Advanced CSS</div>
+      <div class="toc-grid">
+        <a href="#pseudo"         class="toc-item"><span class="toc-num">27</span> Pseudo-classes & Elements</a>
+        <a href="#transforms"     class="toc-item"><span class="toc-num">28</span> Transforms</a>
+        <a href="#transitions"    class="toc-item"><span class="toc-num">29</span> Transitions</a>
+        <a href="#animations"     class="toc-item"><span class="toc-num">30</span> Animations</a>
+        <a href="#media-queries"  class="toc-item"><span class="toc-num">31</span> Media Queries</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CHAPTER 1 — HTML FOUNDATIONS -->
+<div class="chapter-divider" id="html-chapter">
+  <div class="ch-num">01</div>
+  <div>
+    <h2>HTML Foundations</h2>
+    <p>Structure, semantics, forms, tables, links, and media</p>
+  </div>
+</div>
+
+<!-- 01 · HTML Basics -->
+<section class="section" id="html-basics">
+  <div class="container">
+    <p class="section-label">01 — HTML</p>
+    <h2>HTML Basics &amp; Structure</h2>
+    <p class="intro-text">HTML (HyperText Markup Language) is the skeleton of every web page. It uses <strong>tags</strong> to wrap content, <strong>attributes</strong> to add extra info, and <strong>nesting</strong> to create hierarchy.</p>
+
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">📄</div><h4>DOCTYPE</h4><p>Tells the browser this is an HTML5 document. Always the first line.</p></div>
+      <div class="card"><div class="card-icon">🏗️</div><h4>Elements</h4><p>Opening <code>&lt;tag&gt;</code> + content + closing <code>&lt;/tag&gt;</code>. Some are self-closing: <code>&lt;img /&gt;</code>.</p></div>
+      <div class="card"><div class="card-icon">🏷️</div><h4>Attributes</h4><p>Key=value pairs inside the opening tag: <code>href</code>, <code>src</code>, <code>class</code>, <code>id</code>, <code>alt</code>.</p></div>
+      <div class="card"><div class="card-icon">🧩</div><h4>Nesting</h4><p>Elements live inside each other. A child must close before its parent.</p></div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">index.html — Full skeleton</span></div>
+      <pre><span class="t">&lt;!DOCTYPE html&gt;</span>
+<span class="t">&lt;html</span> <span class="a">lang</span>=<span class="v">"en"</span><span class="t">&gt;</span>
+  <span class="t">&lt;head&gt;</span>                             <span class="c">&lt;!-- invisible metadata --&gt;</span>
+    <span class="t">&lt;meta</span> <span class="a">charset</span>=<span class="v">"UTF-8"</span> <span class="t">/&gt;</span>
+    <span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"viewport"</span> <span class="a">content</span>=<span class="v">"width=device-width, initial-scale=1"</span><span class="t">/&gt;</span>
+    <span class="t">&lt;title&gt;</span>Page Title<span class="t">&lt;/title&gt;</span>
+    <span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"stylesheet"</span> <span class="a">href</span>=<span class="v">"style.css"</span><span class="t">/&gt;</span>
+  <span class="t">&lt;/head&gt;</span>
+  <span class="t">&lt;body&gt;</span>                             <span class="c">&lt;!-- visible content --&gt;</span>
+    <span class="t">&lt;header&gt;</span><span class="t">&lt;h1&gt;</span>Hello World<span class="t">&lt;/h1&gt;</span><span class="t">&lt;/header&gt;</span>
+    <span class="t">&lt;main&gt;</span>
+      <span class="t">&lt;p&gt;</span>Content goes here.<span class="t">&lt;/p&gt;</span>
+    <span class="t">&lt;/main&gt;</span>
+    <span class="t">&lt;footer&gt;</span><span class="t">&lt;p&gt;</span>Footer<span class="t">&lt;/p&gt;</span><span class="t">&lt;/footer&gt;</span>
+  <span class="t">&lt;/body&gt;</span>
+<span class="t">&lt;/html&gt;</span></pre>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">💡</div>
+      <div><strong>Head vs Body</strong> The <code>&lt;head&gt;</code> is invisible — metadata, title, CSS links. The <code>&lt;body&gt;</code> is everything the user sees. The <code>viewport</code> meta tag is essential for responsive design on mobile.</div>
+    </div>
+
+    <div class="tags">
+      <span class="tag r">&lt;!DOCTYPE&gt;</span><span class="tag r">&lt;html&gt;</span><span class="tag r">&lt;head&gt;</span><span class="tag r">&lt;body&gt;</span>
+      <span class="tag">&lt;title&gt;</span><span class="tag">&lt;meta&gt;</span><span class="tag">&lt;link&gt;</span><span class="tag">&lt;script&gt;</span>
+      <span class="tag">&lt;h1&gt;–&lt;h6&gt;</span><span class="tag">&lt;p&gt;</span><span class="tag">&lt;a&gt;</span><span class="tag">&lt;br&gt;</span><span class="tag">&lt;hr&gt;</span><span class="tag">&lt;span&gt;</span><span class="tag">&lt;div&gt;</span>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · Semantic Elements -->
+<section class="section" id="html-semantic">
+  <div class="container">
+    <p class="section-label">02 — HTML</p>
+    <h2>Semantic Elements</h2>
+    <p class="intro-text">Semantic tags describe the <em>meaning</em> of the content, not just the appearance. They help browsers, screen readers, and search engines understand your page structure.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">semantic-layout.html</span></div>
+      <pre><span class="t">&lt;header&gt;</span>    <span class="c">&lt;!-- site header, logo, nav --&gt;</span>
+  <span class="t">&lt;nav&gt;</span>       <span class="c">&lt;!-- navigation links --&gt;</span>
+    <span class="t">&lt;ul&gt;</span>
+      <span class="t">&lt;li&gt;&lt;a</span> <span class="a">href</span>=<span class="v">"/"</span><span class="t">&gt;</span>Home<span class="t">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="t">&lt;/ul&gt;</span>
+  <span class="t">&lt;/nav&gt;</span>
+<span class="t">&lt;/header&gt;</span>
+
+<span class="t">&lt;main&gt;</span>         <span class="c">&lt;!-- unique page content --&gt;</span>
+  <span class="t">&lt;article&gt;</span>   <span class="c">&lt;!-- standalone, shareable content --&gt;</span>
+    <span class="t">&lt;h2&gt;</span>Post Title<span class="t">&lt;/h2&gt;</span>
+    <span class="t">&lt;section&gt;</span> <span class="c">&lt;!-- thematic grouping inside article --&gt;</span>
+      <span class="t">&lt;p&gt;</span>Content…<span class="t">&lt;/p&gt;</span>
+    <span class="t">&lt;/section&gt;</span>
+  <span class="t">&lt;/article&gt;</span>
+
+  <span class="t">&lt;aside&gt;</span>     <span class="c">&lt;!-- sidebar, tangentially related --&gt;</span>
+    <span class="t">&lt;p&gt;</span>Related links<span class="t">&lt;/p&gt;</span>
+  <span class="t">&lt;/aside&gt;</span>
+<span class="t">&lt;/main&gt;</span>
+
+<span class="t">&lt;footer&gt;</span>       <span class="c">&lt;!-- copyright, links, contact --&gt;</span>
+  <span class="t">&lt;p&gt;</span>&amp;copy; 2025<span class="t">&lt;/p&gt;</span>
+<span class="t">&lt;/footer&gt;</span></pre>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tag</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>&lt;header&gt;</code></td><td>Introductory content — logo, site title, navigation</td></tr>
+          <tr><td><code>&lt;nav&gt;</code></td><td>Navigation links — main menu, breadcrumbs</td></tr>
+          <tr><td><code>&lt;main&gt;</code></td><td>The dominant unique content of the page (once per page)</td></tr>
+          <tr><td><code>&lt;article&gt;</code></td><td>Self-contained, syndicate-able content — blog post, news item</td></tr>
+          <tr><td><code>&lt;section&gt;</code></td><td>Thematic grouping of content, usually with a heading</td></tr>
+          <tr><td><code>&lt;aside&gt;</code></td><td>Tangentially related content — sidebar, pull quote</td></tr>
+          <tr><td><code>&lt;footer&gt;</code></td><td>Footer for a page or section — copyright, links</td></tr>
+          <tr><td><code>&lt;figure&gt;</code> / <code>&lt;figcaption&gt;</code></td><td>Image with caption</td></tr>
+          <tr><td><code>&lt;time&gt;</code></td><td>A date/time value machine-readable via <code>datetime</code> attr</td></tr>
+          <tr><td><code>&lt;mark&gt;</code></td><td>Highlighted / relevant text: <mark style="background:#fff176;padding:0 3px;">like this</mark></td></tr>
+          <tr><td><code>&lt;details&gt;</code> / <code>&lt;summary&gt;</code></td><td>Expandable disclosure widget</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">details / summary — built-in HTML accordion</div>
+      <details style="font-size:.9rem;cursor:pointer;">
+        <summary style="font-weight:600;padding:.3rem 0;">What is semantic HTML?</summary>
+        <p style="margin-top:.6rem;color:#4a453f;">Semantic HTML means using elements that have inherent meaning — like <code>&lt;article&gt;</code>, <code>&lt;nav&gt;</code>, and <code>&lt;footer&gt;</code> — rather than generic <code>&lt;div&gt;</code> containers for everything. It improves accessibility, SEO, and code readability.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · Forms & Inputs -->
+<section class="section" id="html-forms">
+  <div class="container">
+    <p class="section-label">03 — HTML</p>
+    <h2>Forms &amp; Inputs</h2>
+    <p class="intro-text">Forms collect data from users. Each input element has a <code>type</code> that controls the UI and validation. The <code>label</code> element improves accessibility by linking text to its input.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">form.html</span></div>
+      <pre><span class="t">&lt;form</span> <span class="a">action</span>=<span class="v">"/submit"</span> <span class="a">method</span>=<span class="v">"post"</span><span class="t">&gt;</span>
+
+  <span class="c">&lt;!-- Text input --&gt;</span>
+  <span class="t">&lt;label</span> <span class="a">for</span>=<span class="v">"name"</span><span class="t">&gt;</span>Name<span class="t">&lt;/label&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="v">"text"</span> <span class="a">id</span>=<span class="v">"name"</span> <span class="a">name</span>=<span class="v">"name"</span> <span class="a">placeholder</span>=<span class="v">"John Doe"</span> <span class="a">required</span><span class="t">&gt;</span>
+
+  <span class="c">&lt;!-- Email --&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="v">"email"</span> <span class="a">placeholder</span>=<span class="v">"you@example.com"</span><span class="t">&gt;</span>
+
+  <span class="c">&lt;!-- Password --&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="v">"password"</span> <span class="a">minlength</span>=<span class="v">"8"</span><span class="t">&gt;</span>
+
+  <span class="c">&lt;!-- Number --&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="v">"number"</span> <span class="a">min</span>=<span class="v">"0"</span> <span class="a">max</span>=<span class="v">"100"</span> <span class="a">step</span>=<span class="v">"5"</span><span class="t">&gt;</span>
+
+  <span class="c">&lt;!-- Dropdown --&gt;</span>
+  <span class="t">&lt;select</span> <span class="a">name</span>=<span class="v">"role"</span><span class="t">&gt;</span>
+    <span class="t">&lt;option</span> <span class="a">value</span>=<span class="v">""</span><span class="t">&gt;</span>Choose role…<span class="t">&lt;/option&gt;</span>
+    <span class="t">&lt;option</span> <span class="a">value</span>=<span class="v">"dev"</span><span class="t">&gt;</span>Developer<span class="t">&lt;/option&gt;</span>
+  <span class="t">&lt;/select&gt;</span>
+
+  <span class="c">&lt;!-- Checkbox --&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="v">"checkbox"</span> <span class="a">id</span>=<span class="v">"agree"</span><span class="t">&gt;</span>
+  <span class="t">&lt;label</span> <span class="a">for</span>=<span class="v">"agree"</span><span class="t">&gt;</span>I agree<span class="t">&lt;/label&gt;</span>
+
+  <span class="c">&lt;!-- Textarea --&gt;</span>
+  <span class="t">&lt;textarea</span> <span class="a">rows</span>=<span class="v">"4"</span> <span class="a">placeholder</span>=<span class="v">"Your message…"</span><span class="t">&gt;&lt;/textarea&gt;</span>
+
+  <span class="t">&lt;button</span> <span class="a">type</span>=<span class="v">"submit"</span><span class="t">&gt;</span>Submit<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;/form&gt;</span></pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Live Form Demo</div>
+      <div class="form-demo">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="Asel" /></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Dev" /></div>
+        </div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="you@example.com" /></div>
+        <div class="form-group"><label>Password</label><input type="password" placeholder="min 8 characters" /></div>
+        <div class="form-group"><label>Role</label>
+          <select><option>Choose role…</option><option>Developer</option><option>Designer</option><option>Manager</option></select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Your message here…"></textarea></div>
+        <div class="form-check"><input type="checkbox" id="cb1"><label for="cb1">I agree to the terms</label></div>
+        <div class="form-check"><input type="radio" id="rb1" name="plan"><label for="rb1">Free Plan</label></div>
+        <div class="form-check"><input type="radio" id="rb2" name="plan"><label for="rb2">Pro Plan</label></div>
+        <div class="btn-row" style="margin:0"><button class="btn btn-primary">Submit Form</button><button class="btn btn-ghost" type="reset">Reset</button></div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Input type</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code>text</code></td><td>Single-line text</td></tr>
+          <tr><td><code>email</code></td><td>Validates email format</td></tr>
+          <tr><td><code>password</code></td><td>Masks characters</td></tr>
+          <tr><td><code>number</code></td><td>Number only, with min/max/step</td></tr>
+          <tr><td><code>checkbox</code></td><td>On/off toggle</td></tr>
+          <tr><td><code>radio</code></td><td>One choice from a group</td></tr>
+          <tr><td><code>range</code></td><td>Slider control</td></tr>
+          <tr><td><code>date</code></td><td>Date picker</td></tr>
+          <tr><td><code>file</code></td><td>File upload</td></tr>
+          <tr><td><code>color</code></td><td>Colour picker</td></tr>
+          <tr><td><code>hidden</code></td><td>Invisible data sent with form</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · Tables -->
+<section class="section" id="html-tables">
+  <div class="container">
+    <p class="section-label">04 — HTML</p>
+    <h2>Tables</h2>
+    <p class="intro-text">HTML tables are for <em>tabular data</em> — rows and columns of related information. The key elements are <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;th&gt;</code>, and <code>&lt;td&gt;</code>.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">table.html</span></div>
+      <pre><span class="t">&lt;table&gt;</span>
+  <span class="t">&lt;caption&gt;</span>Student Grades<span class="t">&lt;/caption&gt;</span>   <span class="c">&lt;!-- table title --&gt;</span>
+  <span class="t">&lt;thead&gt;</span>
+    <span class="t">&lt;tr&gt;</span>
+      <span class="t">&lt;th&gt;</span>Name<span class="t">&lt;/th&gt;</span>   <span class="t">&lt;th&gt;</span>Subject<span class="t">&lt;/th&gt;</span>   <span class="t">&lt;th&gt;</span>Grade<span class="t">&lt;/th&gt;</span>
+    <span class="t">&lt;/tr&gt;</span>
+  <span class="t">&lt;/thead&gt;</span>
+  <span class="t">&lt;tbody&gt;</span>
+    <span class="t">&lt;tr&gt;</span>
+      <span class="t">&lt;td&gt;</span>Asel<span class="t">&lt;/td&gt;</span>   <span class="t">&lt;td&gt;</span>HTML<span class="t">&lt;/td&gt;</span>   <span class="t">&lt;td&gt;</span>A<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;/tr&gt;</span>
+  <span class="t">&lt;/tbody&gt;</span>
+  <span class="t">&lt;tfoot&gt;</span>   <span class="c">&lt;!-- optional footer row --&gt;</span>
+    <span class="t">&lt;tr&gt;&lt;td</span> <span class="a">colspan</span>=<span class="v">"3"</span><span class="t">&gt;</span>3 students total<span class="t">&lt;/td&gt;&lt;/tr&gt;</span>
+  <span class="t">&lt;/tfoot&gt;</span>
+<span class="t">&lt;/table&gt;</span></pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Live Table Demo</div>
+      <table class="html-table">
+        <caption>Student Progress Tracker</caption>
+        <thead><tr><th>Name</th><th>Subject</th><th>Grade</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Asel</td><td>HTML</td><td>A</td><td>✅ Complete</td></tr>
+          <tr><td>Asel</td><td>CSS</td><td>A</td><td>✅ Complete</td></tr>
+          <tr><td>Asel</td><td>JavaScript</td><td>B+</td><td>⏳ In Progress</td></tr>
+          <tr><td>Asel</td><td>Laravel</td><td>A</td><td>✅ Complete</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="4" style="color:var(--muted);font-size:.82rem;padding:.5rem 1rem;">4 modules tracked</td></tr></tfoot>
+      </table>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">💡</div>
+      <div><strong>colspan & rowspan</strong> Use <code>colspan="2"</code> to make a cell span 2 columns, or <code>rowspan="2"</code> to span 2 rows. Don't use tables for page layout — use Flexbox or Grid instead.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · Lists & Links -->
+<section class="section" id="html-lists">
+  <div class="container">
+    <p class="section-label">05 — HTML</p>
+    <h2>Lists &amp; Links</h2>
+    <p class="intro-text">HTML has three list types and a powerful anchor element for navigation, external links, email, and downloads.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">lists-links.html</span></div>
+      <pre><span class="c">&lt;!-- Unordered list (bullets) --&gt;</span>
+<span class="t">&lt;ul&gt;</span>
+  <span class="t">&lt;li&gt;</span>HTML<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>CSS<span class="t">&lt;/li&gt;</span>
+<span class="t">&lt;/ul&gt;</span>
+
+<span class="c">&lt;!-- Ordered list (numbers) --&gt;</span>
+<span class="t">&lt;ol</span> <span class="a">start</span>=<span class="v">"1"</span><span class="t">&gt;</span>
+  <span class="t">&lt;li&gt;</span>Learn HTML<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>Learn CSS<span class="t">&lt;/li&gt;</span>
+<span class="t">&lt;/ol&gt;</span>
+
+<span class="c">&lt;!-- Description list (key: value) --&gt;</span>
+<span class="t">&lt;dl&gt;</span>
+  <span class="t">&lt;dt&gt;</span>HTML<span class="t">&lt;/dt&gt;</span>   <span class="t">&lt;dd&gt;</span>Structure<span class="t">&lt;/dd&gt;</span>
+  <span class="t">&lt;dt&gt;</span>CSS<span class="t">&lt;/dt&gt;</span>    <span class="t">&lt;dd&gt;</span>Styling<span class="t">&lt;/dd&gt;</span>
+<span class="t">&lt;/dl&gt;</span>
+
+<span class="c">&lt;!-- Links --&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>=<span class="v">"https://example.com"</span> <span class="a">target</span>=<span class="v">"_blank"</span> <span class="a">rel</span>=<span class="v">"noopener"</span><span class="t">&gt;</span>External<span class="t">&lt;/a&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>=<span class="v">"#section"</span><span class="t">&gt;</span>Anchor link<span class="t">&lt;/a&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>=<span class="v">"mailto:hi@example.com"</span><span class="t">&gt;</span>Email<span class="t">&lt;/a&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>=<span class="v">"file.pdf"</span> <span class="a">download</span><span class="t">&gt;</span>Download PDF<span class="t">&lt;/a&gt;</span></pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">List Types</div>
+      <div class="list-cols list-demo">
+        <div><strong style="font-size:.82rem;font-family:'DM Mono',monospace;">ul — unordered</strong>
+          <ul style="margin-top:.4rem;"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul></div>
+        <div><strong style="font-size:.82rem;font-family:'DM Mono',monospace;">ol — ordered</strong>
+          <ol style="margin-top:.4rem;"><li>Learn HTML</li><li>Learn CSS</li><li>Build projects</li></ol></div>
+        <div><strong style="font-size:.82rem;font-family:'DM Mono',monospace;">dl — description</strong>
+          <dl style="margin-top:.4rem;font-size:.9rem;">
+            <dt style="font-weight:600;">HTML</dt><dd style="color:var(--muted);margin-bottom:.3rem;">Structure</dd>
+            <dt style="font-weight:600;">CSS</dt><dd style="color:var(--muted);">Styling</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 · Media & Attributes -->
+<section class="section" id="html-media">
+  <div class="container">
+    <p class="section-label">06 — HTML</p>
+    <h2>Media &amp; Global Attributes</h2>
+    <p class="intro-text">HTML can embed images, video, and audio. <strong>Global attributes</strong> like <code>id</code>, <code>class</code>, <code>data-*</code>, and <code>tabindex</code> work on any element.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">media.html</span></div>
+      <pre><span class="c">&lt;!-- Image --&gt;</span>
+<span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"photo.jpg"</span> <span class="a">alt</span>=<span class="v">"Description for screen readers"</span>
+     <span class="a">width</span>=<span class="v">"800"</span> <span class="a">height</span>=<span class="v">"600"</span> <span class="a">loading</span>=<span class="v">"lazy"</span><span class="t"> /&gt;</span>
+
+<span class="c">&lt;!-- Responsive image with picture --&gt;</span>
+<span class="t">&lt;picture&gt;</span>
+  <span class="t">&lt;source</span> <span class="a">media</span>=<span class="v">"(min-width:800px)"</span> <span class="a">srcset</span>=<span class="v">"large.jpg"</span><span class="t">/&gt;</span>
+  <span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"small.jpg"</span> <span class="a">alt</span>=<span class="v">"…"</span><span class="t">/&gt;</span>
+<span class="t">&lt;/picture&gt;</span>
+
+<span class="c">&lt;!-- Video --&gt;</span>
+<span class="t">&lt;video</span> <span class="a">controls</span> <span class="a">width</span>=<span class="v">"640"</span> <span class="a">poster</span>=<span class="v">"thumb.jpg"</span><span class="t">&gt;</span>
+  <span class="t">&lt;source</span> <span class="a">src</span>=<span class="v">"video.mp4"</span> <span class="a">type</span>=<span class="v">"video/mp4"</span><span class="t">/&gt;</span>
+<span class="t">&lt;/video&gt;</span>
+
+<span class="c">&lt;!-- Audio --&gt;</span>
+<span class="t">&lt;audio</span> <span class="a">controls</span><span class="t">&gt;</span>
+  <span class="t">&lt;source</span> <span class="a">src</span>=<span class="v">"audio.mp3"</span> <span class="a">type</span>=<span class="v">"audio/mpeg"</span><span class="t">/&gt;</span>
+<span class="t">&lt;/audio&gt;</span>
+
+<span class="c">&lt;!-- Global attributes (work on ANY element) --&gt;</span>
+<span class="t">&lt;div</span> <span class="a">id</span>=<span class="v">"unique-id"</span>           <span class="c">&lt;!-- unique per page --&gt;</span>
+     <span class="a">class</span>=<span class="v">"card featured"</span>     <span class="c">&lt;!-- multiple classes --&gt;</span>
+     <span class="a">data-user-id</span>=<span class="v">"42"</span>        <span class="c">&lt;!-- custom data attribute --&gt;</span>
+     <span class="a">title</span>=<span class="v">"Tooltip text"</span>     <span class="c">&lt;!-- hover tooltip --&gt;</span>
+     <span class="a">hidden</span>                     <span class="c">&lt;!-- hides element --&gt;</span>
+     <span class="a">tabindex</span>=<span class="v">"0"</span><span class="t">&gt;</span>             <span class="c">&lt;!-- keyboard focusable --&gt;</span>
+<span class="t">&lt;/div&gt;</span></pre>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">💡</div>
+      <div><strong>alt text is mandatory</strong> Every <code>&lt;img&gt;</code> needs an <code>alt</code> attribute. Screen readers read it aloud; search engines index it. If the image is purely decorative, use <code>alt=""</code> (empty string, not missing).</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 2 — CSS FOUNDATIONS -->
+<div class="chapter-divider" id="css-chapter">
+  <div class="ch-num">02</div>
+  <div><h2>CSS Foundations</h2><p>Syntax, selectors, specificity, units, and variables</p></div>
+</div>
+
+<!-- 07 · CSS Basics -->
+<section class="section" id="css-basics">
+  <div class="container">
+    <p class="section-label">07 — CSS</p>
+    <h2>CSS Basics</h2>
+    <p class="intro-text">CSS (Cascading Style Sheets) adds colour, size, layout, and motion to HTML. A CSS <strong>rule</strong> = <strong>selector</strong> + <strong>declaration block</strong> containing property–value pairs.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">style.css — Anatomy</span></div>
+      <pre><span class="c">/* ─ selector ─────── { property: value; } */</span>
+
+<span class="s">h1</span> {
+  <span class="p">color</span>:           <span class="n">#c84b2f</span>;
+  <span class="p">font-size</span>:       <span class="n">2rem</span>;
+  <span class="p">font-weight</span>:     <span class="n">700</span>;
+  <span class="p">text-align</span>:      <span class="n">center</span>;
+  <span class="p">margin-bottom</span>:   <span class="n">1rem</span>;
+}
+
+<span class="c">/* 3 ways to add CSS */</span>
+<span class="c">/* 1. External — &lt;link rel="stylesheet" href="style.css"&gt;    */</span>
+<span class="c">/* 2. Internal — &lt;style&gt; rules here &lt;/style&gt; inside &lt;head&gt;  */</span>
+<span class="c">/* 3. Inline   — &lt;p style="color:red;"&gt; (avoid for large CSS) */</span></pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Result</div>
+      <h1 style="color:#c84b2f;font-size:2rem;text-align:center;font-family:'Playfair Display',serif;">Styled with CSS</h1>
+      <p style="text-align:center;color:#4a453f;font-size:.95rem;">font-size: 2rem · color: #c84b2f · text-align: center</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 · Selectors -->
+<section class="section" id="css-selectors">
+  <div class="container">
+    <p class="section-label">08 — CSS</p>
+    <h2>Selectors</h2>
+    <p class="intro-text">Selectors determine which elements a CSS rule targets. They range from broad (element type) to precise (attribute values, position in tree).</p>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>Selector</th><th>Syntax</th><th>Targets</th></tr></thead>
+      <tbody>
+        <tr><td>Element</td><td><code>p</code></td><td>All <code>&lt;p&gt;</code> elements</td></tr>
+        <tr><td>Class</td><td><code>.card</code></td><td>Elements with <code>class="card"</code></td></tr>
+        <tr><td>ID</td><td><code>#hero</code></td><td>The element with <code>id="hero"</code></td></tr>
+        <tr><td>Universal</td><td><code>*</code></td><td>Every element</td></tr>
+        <tr><td>Descendant</td><td><code>nav a</code></td><td>Any <code>&lt;a&gt;</code> inside a <code>&lt;nav&gt;</code></td></tr>
+        <tr><td>Child</td><td><code>ul &gt; li</code></td><td>Direct <code>&lt;li&gt;</code> children of <code>&lt;ul&gt;</code></td></tr>
+        <tr><td>Adjacent sibling</td><td><code>h2 + p</code></td><td>First <code>&lt;p&gt;</code> immediately after <code>&lt;h2&gt;</code></td></tr>
+        <tr><td>General sibling</td><td><code>h2 ~ p</code></td><td>All <code>&lt;p&gt;</code> siblings after <code>&lt;h2&gt;</code></td></tr>
+        <tr><td>Attribute (exists)</td><td><code>[disabled]</code></td><td>Elements with a <code>disabled</code> attr</td></tr>
+        <tr><td>Attribute (value)</td><td><code>input[type="email"]</code></td><td>Email inputs only</td></tr>
+        <tr><td>Attribute (starts)</td><td><code>a[href^="https"]</code></td><td>Links starting with https</td></tr>
+        <tr><td>Attribute (contains)</td><td><code>a[href*="github"]</code></td><td>Links containing "github"</td></tr>
+        <tr><td>Grouping</td><td><code>h1, h2, h3</code></td><td>Apply same style to multiple</td></tr>
+        <tr><td>:not()</td><td><code>li:not(.active)</code></td><td>List items without class "active"</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- 09 · Specificity -->
+<section class="section" id="css-specificity">
+  <div class="container">
+    <p class="section-label">09 — CSS</p>
+    <h2>Specificity &amp; The Cascade</h2>
+    <p class="intro-text">When two rules target the same element, <strong>specificity</strong> determines which one wins. Think of it as a score — the rule with the higher score is applied.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">specificity.css</span></div>
+      <pre><span class="c">/* Specificity score: (inline, IDs, classes, elements) */</span>
+
+<span class="s">p</span>               { <span class="p">color</span>: <span class="n">black</span>; }   <span class="c">/* 0,0,0,1 — element */</span>
+<span class="s">.text</span>           { <span class="p">color</span>: <span class="n">blue</span>; }    <span class="c">/* 0,0,1,0 — class   */</span>
+<span class="s">#intro</span>          { <span class="p">color</span>: <span class="n">red</span>; }     <span class="c">/* 0,1,0,0 — ID      */</span>
+<span class="c">/* inline style="color:green"        — 1,0,0,0  highest   */</span>
+
+<span class="c">/* !important overrides ALL — use sparingly */</span>
+<span class="s">p</span>               { <span class="p">color</span>: <span class="n">pink</span> <span class="k">!important</span>; }</pre>
+    </div>
+
+    <div class="spec-row">
+      <div class="spec-item">
+        <span class="spec-label">Element — <code>p</code></span>
+        <div class="spec-bar-wrap"><div class="spec-bar" style="width:5%; background:#9a9287;"></div></div>
+        <span class="spec-num">0,0,0,1</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Class — <code>.card</code></span>
+        <div class="spec-bar-wrap"><div class="spec-bar" style="width:25%; background:#2196f3;"></div></div>
+        <span class="spec-num">0,0,1,0</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Class + Element — <code>.card p</code></span>
+        <div class="spec-bar-wrap"><div class="spec-bar" style="width:30%; background:#7c3aed;"></div></div>
+        <span class="spec-num">0,0,1,1</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">ID — <code>#hero</code></span>
+        <div class="spec-bar-wrap"><div class="spec-bar" style="width:60%; background:#f59e0b;"></div></div>
+        <span class="spec-num">0,1,0,0</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Inline style</span>
+        <div class="spec-bar-wrap"><div class="spec-bar" style="width:90%; background:var(--accent);"></div></div>
+        <span class="spec-num">1,0,0,0</span>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">⚡</div>
+      <div><strong>Cascade tiebreaker</strong> When specificity is equal, the rule that appears <em>later</em> in the CSS wins. This is the "cascading" in CSS. Always prefer classes over IDs for reusable styles.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · Units -->
+<section class="section" id="css-units">
+  <div class="container">
+    <p class="section-label">10 — CSS</p>
+    <h2>CSS Units</h2>
+    <p class="intro-text">CSS has two types of units — <strong>absolute</strong> (fixed size) and <strong>relative</strong> (size relative to something else). Relative units are the key to responsive design.</p>
+
+    <div class="unit-grid">
+      <div class="unit-card"><div class="unit-name">px</div><p>Absolute pixels. Fixed regardless of parent. Good for borders and shadows.</p></div>
+      <div class="unit-card"><div class="unit-name">%</div><p>Percentage of the parent element's width. Good for fluid widths.</p></div>
+      <div class="unit-card"><div class="unit-name">em</div><p>Relative to the element's own font-size. 2em = 2× current font.</p></div>
+      <div class="unit-card"><div class="unit-name">rem</div><p>Relative to the root (<code>&lt;html&gt;</code>) font-size. More predictable than em.</p></div>
+      <div class="unit-card"><div class="unit-name">vw / vh</div><p>Viewport Width / Height. <code>100vw</code> = full browser width.</p></div>
+      <div class="unit-card"><div class="unit-name">fr</div><p>Fractional unit for CSS Grid. <code>1fr</code> takes 1 "share" of available space.</p></div>
+      <div class="unit-card"><div class="unit-name">clamp()</div><p><code>clamp(min, ideal, max)</code> — fluid value that never goes below min or above max.</p></div>
+      <div class="unit-card"><div class="unit-name">ch</div><p>Width of the "0" character in the current font. Useful for controlling line length.</p></div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">units.css</span></div>
+      <pre><span class="s">:root</span>     { <span class="p">font-size</span>: <span class="n">16px</span>; }       <span class="c">/* 1rem = 16px */</span>
+
+<span class="s">.container</span> { <span class="p">width</span>: <span class="n">90%</span>; <span class="p">max-width</span>: <span class="n">1200px</span>; }
+
+<span class="s">h1</span>  { <span class="p">font-size</span>: <span class="n">clamp(1.8rem, 4vw, 3.5rem)</span>; } <span class="c">/* fluid */</span>
+<span class="s">p</span>   { <span class="p">font-size</span>: <span class="n">1rem</span>; <span class="p">max-width</span>: <span class="n">60ch</span>; }
+
+<span class="s">.hero</span>     { <span class="p">height</span>: <span class="n">100vh</span>; }         <span class="c">/* full screen */</span>
+<span class="s">.card</span>     { <span class="p">padding</span>: <span class="n">1.5rem</span>; }       <span class="c">/* rem for spacing */</span>
+<span class="s">.border</span>   { <span class="p">border</span>: <span class="n">1px solid #ccc</span>; }<span class="c">/* px for thin borders */</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · CSS Variables -->
+<section class="section" id="css-variables">
+  <div class="container">
+    <p class="section-label">11 — CSS</p>
+    <h2>CSS Variables (Custom Properties)</h2>
+    <p class="intro-text">CSS custom properties let you store values in named variables and reuse them across your stylesheet. Change a variable once → updates everywhere.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">variables.css</span></div>
+      <pre><span class="c">/* Define on :root = available everywhere */</span>
+<span class="s">:root</span> {
+  <span class="p">--color-primary</span>: <span class="n">#c84b2f</span>;
+  <span class="p">--color-secondary</span>: <span class="n">#2563eb</span>;
+  <span class="p">--font-body</span>: <span class="st">'DM Sans', sans-serif</span>;
+  <span class="p">--spacing-sm</span>: <span class="n">0.5rem</span>;
+  <span class="p">--spacing-md</span>: <span class="n">1rem</span>;
+  <span class="p">--radius</span>: <span class="n">8px</span>;
+}
+
+<span class="s">.button</span> {
+  <span class="p">background</span>: <span class="n">var(--color-primary)</span>;
+  <span class="p">padding</span>:    <span class="n">var(--spacing-sm) var(--spacing-md)</span>;
+  <span class="p">border-radius</span>: <span class="n">var(--radius)</span>;
+}
+
+<span class="c">/* Override locally inside a component */</span>
+<span class="s">.dark-theme</span> {
+  <span class="p">--color-primary</span>: <span class="n">#ff6b6b</span>; <span class="c">/* only changes inside .dark-theme */</span>
+}
+
+<span class="c">/* Fallback value if variable not defined */</span>
+<span class="s">p</span> { <span class="p">color</span>: <span class="n">var(--text-color, #333)</span>; }</pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Variables in action</div>
+      <div class="var-demo">
+        <p>This box uses <span class="var-swatch"></span><code>--brand</code>, <code>--space</code>, and <code>--radius</code> CSS variables. Change the variable → the whole component updates instantly.</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">💡</div>
+      <div><strong>JavaScript can read and write CSS variables</strong> <code>document.documentElement.style.setProperty('--color-primary', '#ff0000')</code> — this makes dynamic theming (dark mode toggle, etc.) very easy.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CHAPTER 3 — LAYOUT -->
+
+<div class="chapter-divider" id="layout-chapter">
+  <div class="ch-num">03</div>
+  <div><h2>Layout</h2><p>Box model, display, Flexbox, Grid, positioning, z-index, overflow</p></div>
+</div>
+
+<!-- 12 · Box Model -->
+<section class="section" id="box-model">
+  <div class="container">
+    <p class="section-label">12 — Layout</p>
+    <h2>The Box Model</h2>
+    <p class="intro-text">Every HTML element is a rectangular box made of four layers: <strong>content</strong> → <strong>padding</strong> → <strong>border</strong> → <strong>margin</strong>.</p>
+
+    <div class="demo" style="text-align:center;">
+      <div class="demo-lbl">Visual layers</div>
+      <div class="bm-outer"><span class="bm-label">margin (space outside)</span>
+        <div class="bm-border"><span class="bm-label">border</span>
+          <div class="bm-pad"><span class="bm-label">padding (space inside)</span>
+            <div class="bm-content">content</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">box-model.css</span></div>
+      <pre><span class="c">/* Apply everywhere — always do this */</span>
+<span class="s">*</span>, <span class="s">*::before</span>, <span class="s">*::after</span> { <span class="p">box-sizing</span>: <span class="n">border-box</span>; }
+
+<span class="s">.card</span> {
+  <span class="p">width</span>:        <span class="n">320px</span>;
+  <span class="p">padding</span>:      <span class="n">20px</span>;           <span class="c">/* all four sides */</span>
+  <span class="p">padding</span>:      <span class="n">10px 20px</span>;     <span class="c">/* top/bottom  left/right */</span>
+  <span class="p">padding</span>:      <span class="n">5px 10px 15px 20px</span>; <span class="c">/* top right bottom left */</span>
+  <span class="p">border</span>:       <span class="n">2px solid #ccc</span>;
+  <span class="p">border-radius</span>: <span class="n">8px</span>;
+  <span class="p">margin</span>:       <span class="n">16px auto</span>;      <span class="c">/* center horizontally */</span>
+}</pre>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">💡</div>
+      <div><strong>border-box vs content-box</strong> Default (<code>content-box</code>): <code>width:200px + padding:20px = 240px total</code>. With <code>border-box</code>: the element stays 200px total — padding subtracts from the content. Always use <code>border-box</code>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · Display -->
+<section class="section" id="display">
+  <div class="container">
+    <p class="section-label">13 — Layout</p>
+    <h2>Display Values</h2>
+    <p class="intro-text">The <code>display</code> property controls how an element participates in the document flow and how its children are laid out.</p>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>Value</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td><code>block</code></td><td>Full width row. Stacks vertically. <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, headings.</td></tr>
+        <tr><td><code>inline</code></td><td>Sits in text flow. Width/height ignored. <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code>.</td></tr>
+        <tr><td><code>inline-block</code></td><td>Inline but can have width/height.</td></tr>
+        <tr><td><code>flex</code></td><td>Turns children into flex items (1D layout).</td></tr>
+        <tr><td><code>grid</code></td><td>Turns children into grid items (2D layout).</td></tr>
+        <tr><td><code>none</code></td><td>Element removed from layout and invisible.</td></tr>
+        <tr><td><code>contents</code></td><td>Element's own box disappears; children still render.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="demo">
+      <div class="demo-lbl">Block vs Inline vs Inline-block</div>
+      <div class="disp-demo">
+        <span class="disp-block">display: block — takes full width</span>
+        <span class="disp-inline">display: inline</span>
+        <span class="disp-inline"> flows</span>
+        <span class="disp-inline"> with text</span>
+        <br /><br />
+        <span class="disp-ib">inline-block A</span>
+        <span class="disp-ib">inline-block B</span>
+        <span class="disp-ib">inline-block C</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · Flexbox -->
+<section class="section" id="flexbox">
+  <div class="container">
+    <p class="section-label">14 — Layout</p>
+    <h2>Flexbox</h2>
+    <p class="intro-text">Flexbox is a one-dimensional layout system — it arranges items in a <strong>row</strong> or <strong>column</strong>. The parent becomes the <em>flex container</em>; its direct children become <em>flex items</em>.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">flexbox.css — Container &amp; Item properties</span></div>
+      <pre><span class="c">/* ── Container ──────────────────────── */</span>
+<span class="s">.container</span> {
+  <span class="p">display</span>:          <span class="n">flex</span>;
+  <span class="p">flex-direction</span>:   <span class="n">row</span>;           <span class="c">/* row | column | row-reverse */</span>
+  <span class="p">justify-content</span>:  <span class="n">center</span>;       <span class="c">/* main axis: flex-start | center | space-between | space-around */</span>
+  <span class="p">align-items</span>:      <span class="n">center</span>;       <span class="c">/* cross axis: stretch | flex-start | center | flex-end */</span>
+  <span class="p">flex-wrap</span>:        <span class="n">wrap</span>;         <span class="c">/* wrap onto new lines when needed */</span>
+  <span class="p">gap</span>:              <span class="n">16px</span>;         <span class="c">/* space between items */</span>
+}
+
+<span class="c">/* ── Items ───────────────────────────── */</span>
+<span class="s">.item</span> {
+  <span class="p">flex-grow</span>:   <span class="n">1</span>;    <span class="c">/* item stretches to fill space */</span>
+  <span class="p">flex-shrink</span>: <span class="n">0</span>;    <span class="c">/* item won't shrink below flex-basis */</span>
+  <span class="p">flex-basis</span>:  <span class="n">200px</span>;<span class="c">/* starting size */</span>
+  <span class="p">flex</span>:        <span class="n">1 0 200px</span>; <span class="c">/* shorthand: grow shrink basis */</span>
+  <span class="p">align-self</span>:  <span class="n">flex-end</span>; <span class="c">/* override align-items for this item */</span>
+  <span class="p">order</span>:       <span class="n">2</span>;    <span class="c">/* visual order (default 0) */</span>
+}</pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">flex-grow demo — middle item grows</div>
+      <div class="flex-row">
+        <div class="fi">Item A</div>
+        <div class="fi grow">Item B (flex-grow:1)</div>
+        <div class="fi dark">Item C</div>
+      </div>
+    </div>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>justify-content</th><th>align-items</th></tr></thead>
+      <tbody>
+        <tr><td><code>flex-start</code> — items at start</td><td><code>stretch</code> — items fill height (default)</td></tr>
+        <tr><td><code>flex-end</code> — items at end</td><td><code>flex-start</code> — items at top</td></tr>
+        <tr><td><code>center</code> — items centered</td><td><code>center</code> — items vertically centered</td></tr>
+        <tr><td><code>space-between</code> — equal gaps between</td><td><code>flex-end</code> — items at bottom</td></tr>
+        <tr><td><code>space-around</code> — equal space around</td><td><code>baseline</code> — aligned by text baseline</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- 15 · CSS Grid -->
+<section class="section" id="grid">
+  <div class="container">
+    <p class="section-label">15 — Layout</p>
+    <h2>CSS Grid</h2>
+    <p class="intro-text">CSS Grid is a two-dimensional layout system — rows AND columns at the same time. Perfect for page-level layouts and complex card grids.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">grid.css</span></div>
+      <pre><span class="s">.grid</span> {
+  <span class="p">display</span>:               <span class="n">grid</span>;
+  <span class="p">grid-template-columns</span>: <span class="n">repeat(3, 1fr)</span>;   <span class="c">/* 3 equal columns */</span>
+  <span class="p">grid-template-rows</span>:    <span class="n">auto</span>;
+  <span class="p">gap</span>:                   <span class="n">16px</span>;             <span class="c">/* row and column gap */</span>
+  <span class="p">column-gap</span>:            <span class="n">20px</span>;
+  <span class="p">row-gap</span>:               <span class="n">12px</span>;
+}
+
+<span class="c">/* Named template areas */</span>
+<span class="s">.page-layout</span> {
+  <span class="p">display</span>:                    <span class="n">grid</span>;
+  <span class="p">grid-template-columns</span>:      <span class="n">200px 1fr</span>;
+  <span class="p">grid-template-areas</span>:
+    <span class="st">"header  header"</span>
+    <span class="st">"sidebar main  "</span>
+    <span class="st">"footer  footer"</span>;
+}
+<span class="s">.header</span>  { <span class="p">grid-area</span>: <span class="n">header</span>; }
+<span class="s">.sidebar</span> { <span class="p">grid-area</span>: <span class="n">sidebar</span>; }
+<span class="s">.main</span>    { <span class="p">grid-area</span>: <span class="n">main</span>; }
+
+<span class="c">/* Item placement */</span>
+<span class="s">.featured</span> {
+  <span class="p">grid-column</span>: <span class="n">span 2</span>;   <span class="c">/* 2 columns wide */</span>
+  <span class="p">grid-row</span>:    <span class="n">span 2</span>;   <span class="c">/* 2 rows tall */</span>
+}
+
+<span class="c">/* Responsive without media queries */</span>
+<span class="s">.auto-grid</span> {
+  <span class="p">grid-template-columns</span>: <span class="n">repeat(auto-fill, minmax(200px, 1fr))</span>;
+}</pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Grid demo — spanning cells</div>
+      <div class="grid-demo">
+        <div class="gi span3">Wide header (span 3)</div>
+        <div class="gi span2">span 2</div>
+        <div class="gi">C</div>
+        <div class="gi">D</div>
+        <div class="gi">E</div>
+        <div class="gi">F</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 · Positioning -->
+<section class="section" id="positioning">
+  <div class="container">
+    <p class="section-label">16 — Layout</p>
+    <h2>Positioning</h2>
+    <p class="intro-text">The <code>position</code> property controls whether an element follows the normal document flow or is placed manually using <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code>.</p>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>Value</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td><code>static</code></td><td>Default. Follows document flow. top/left do nothing.</td></tr>
+        <tr><td><code>relative</code></td><td>Offset from its own normal position. Other elements don't shift.</td></tr>
+        <tr><td><code>absolute</code></td><td>Removed from flow. Positioned relative to nearest non-static ancestor.</td></tr>
+        <tr><td><code>fixed</code></td><td>Removed from flow. Stays fixed to the viewport (this nav bar!).</td></tr>
+        <tr><td><code>sticky</code></td><td>Normal flow, then sticks at a scroll threshold (<code>top:0</code>).</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="demo">
+      <div class="demo-lbl">Positioning demo</div>
+      <div class="pos-parent">
+        <div class="pos-static">static (normal flow)</div>
+        <div class="pos-rel">relative (shifted down+right)</div>
+        <div class="pos-abs">absolute (pinned bottom-right)</div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">positioning.css</span></div>
+      <pre><span class="s">.parent</span>   { <span class="p">position</span>: <span class="n">relative</span>; }   <span class="c">/* anchor for children */</span>
+
+<span class="s">.tooltip</span>  {
+  <span class="p">position</span>: <span class="n">absolute</span>;
+  <span class="p">top</span>:      <span class="n">-30px</span>;          <span class="c">/* above the parent */</span>
+  <span class="p">left</span>:     <span class="n">50%</span>;
+  <span class="p">transform</span>:<span class="n">translateX(-50%)</span>;<span class="c">/* center horizontally */</span>
+}
+
+<span class="s">.sticky-nav</span> {
+  <span class="p">position</span>: <span class="n">sticky</span>;
+  <span class="p">top</span>:      <span class="n">0</span>;
+}
+
+<span class="s">.modal-overlay</span> {
+  <span class="p">position</span>: <span class="n">fixed</span>;
+  <span class="p">inset</span>:    <span class="n">0</span>;            <span class="c">/* shorthand: top right bottom left = 0 */</span>
+  <span class="p">background</span>: <span class="n">rgba(0,0,0,.5)</span>;
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 17 · Z-index -->
+<section class="section" id="zindex">
+  <div class="container">
+    <p class="section-label">17 — Layout</p>
+    <h2>Z-index &amp; Stacking</h2>
+    <p class="intro-text"><code>z-index</code> controls which element appears <em>on top</em> when elements overlap. Higher z-index = closer to the viewer. Only works on positioned elements (<code>relative</code>, <code>absolute</code>, <code>fixed</code>, <code>sticky</code>).</p>
+
+    <div class="demo">
+      <div class="demo-lbl">z-index layers</div>
+      <div class="z-parent" style="height:100px;">
+        <div class="z-box z1">z:1</div>
+        <div class="z-box z2">z:2</div>
+        <div class="z-box z3">z:3</div>
+        <div class="z-box z4">z:4 ↑ top</div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">z-index.css</span></div>
+      <pre><span class="s">.modal</span>    { <span class="p">position</span>: <span class="n">fixed</span>;    <span class="p">z-index</span>: <span class="n">1000</span>; } <span class="c">/* above everything */</span>
+<span class="s">.overlay</span>  { <span class="p">position</span>: <span class="n">fixed</span>;    <span class="p">z-index</span>: <span class="n">999</span>;  }
+<span class="s">.nav</span>      { <span class="p">position</span>: <span class="n">sticky</span>;   <span class="p">z-index</span>: <span class="n">100</span>;  }
+<span class="s">.dropdown</span> { <span class="p">position</span>: <span class="n">absolute</span>; <span class="p">z-index</span>: <span class="n">50</span>;   }
+<span class="s">.card</span>     { <span class="p">position</span>: <span class="n">relative</span>; <span class="p">z-index</span>: <span class="n">1</span>;    }
+<span class="s">.base</span>     { <span class="p">z-index</span>: <span class="n">0</span>; }         <span class="c">/* default layer */</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- 18 · Overflow -->
+<section class="section" id="overflow">
+  <div class="container">
+    <p class="section-label">18 — Layout</p>
+    <h2>Overflow</h2>
+    <p class="intro-text"><code>overflow</code> controls what happens when content is larger than its container. It can be set for both axes independently with <code>overflow-x</code> and <code>overflow-y</code>.</p>
+
+    <div class="demo">
+      <div class="demo-lbl">overflow comparison</div>
+      <div class="overflow-row">
+        <div>
+          <p style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);margin-bottom:.3rem;">overflow: visible (default)</p>
+          <div class="ov-box" style="overflow:visible;">This text overflows the box boundary and keeps going and going…</div>
+        </div>
+        <div>
+          <p style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);margin-bottom:.3rem;">overflow: hidden</p>
+          <div class="ov-box ov-hidden">This text overflows the box boundary and keeps going and going…</div>
+        </div>
+        <div>
+          <p style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);margin-bottom:.3rem;">overflow-y: scroll</p>
+          <div class="ov-box ov-scroll">This text overflows the box boundary and keeps going and going — but a scroll bar appears so you can still read it all.</div>
+        </div>
+        <div>
+          <p style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);margin-bottom:.3rem;">overflow: auto</p>
+          <div class="ov-box ov-auto">This text overflows the box boundary and keeps going and going — scrollbar appears only when needed.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">overflow.css</span></div>
+      <pre><span class="p">overflow</span>:   <span class="n">visible</span>; <span class="c">/* content spills out (default) */</span>
+<span class="p">overflow</span>:   <span class="n">hidden</span>;  <span class="c">/* clips content silently */</span>
+<span class="p">overflow</span>:   <span class="n">scroll</span>;  <span class="c">/* always shows scrollbars */</span>
+<span class="p">overflow</span>:   <span class="n">auto</span>;    <span class="c">/* scrollbars only when needed */</span>
+<span class="p">overflow-x</span>: <span class="n">hidden</span>; <span class="c">/* horizontal only */</span>
+<span class="p">overflow-y</span>: <span class="n">scroll</span>; <span class="c">/* vertical only */</span>
+
+<span class="c">/* Truncate single-line text with ellipsis */</span>
+<span class="s">.ellipsis</span> {
+  <span class="p">white-space</span>:   <span class="n">nowrap</span>;
+  <span class="p">overflow</span>:      <span class="n">hidden</span>;
+  <span class="p">text-overflow</span>: <span class="n">ellipsis</span>;
+}</pre>
+    </div>
+  </div>
+</section>
+
+
+<!-- CHAPTER 4 — VISUAL STYLING -->
+<div class="chapter-divider" id="visual-chapter">
+  <div class="ch-num">04</div>
+  <div><h2>Visual Styling</h2><p>Typography, colours, backgrounds, borders, shadows, filters</p></div>
+</div>
+
+<!-- 19 · Typography -->
+<section class="section" id="typography">
+  <div class="container">
+    <p class="section-label">19 — Visual</p>
+    <h2>Typography</h2>
+    <p class="intro-text">Typography is the most powerful tool for creating readable, beautiful web pages. Google Fonts gives you free access to hundreds of quality fonts.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">typography.css</span></div>
+      <pre><span class="c">/* Load from Google Fonts (in &lt;head&gt;) */</span>
+<span class="c">/* &lt;link href="https://fonts.googleapis.com/css2?family=Inter" rel="stylesheet"&gt; */</span>
+
+<span class="s">body</span> {
+  <span class="p">font-family</span>:   <span class="st">'DM Sans', sans-serif</span>;
+  <span class="p">font-size</span>:     <span class="n">16px</span>;
+  <span class="p">line-height</span>:   <span class="n">1.7</span>;
+  <span class="p">color</span>:         <span class="n">#0f0e0d</span>;
+}
+
+<span class="s">h1</span> { <span class="p">font-size</span>: <span class="n">clamp(2rem, 4vw, 3.5rem)</span>; <span class="p">font-weight</span>: <span class="n">900</span>; <span class="p">line-height</span>: <span class="n">1.1</span>; }
+<span class="s">h2</span> { <span class="p">font-size</span>: <span class="n">1.75rem</span>; <span class="p">font-weight</span>: <span class="n">700</span>; }
+<span class="s">h3</span> { <span class="p">font-size</span>: <span class="n">1.25rem</span>; <span class="p">font-weight</span>: <span class="n">600</span>; }
+
+<span class="s">p</span>  { <span class="p">max-width</span>: <span class="n">65ch</span>; <span class="p">margin-bottom</span>: <span class="n">1em</span>; }
+
+<span class="p">font-style</span>:      <span class="n">italic</span>;
+<span class="p">text-transform</span>:  <span class="n">uppercase</span> <span class="c">/* | lowercase | capitalize */</span>;
+<span class="p">letter-spacing</span>:  <span class="n">0.1em</span>;
+<span class="p">text-decoration</span>: <span class="n">underline</span> <span class="c">/* | line-through | none */</span>;
+<span class="p">text-shadow</span>:     <span class="n">1px 1px 3px rgba(0,0,0,.2)</span>;</pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Type scale</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:2.2rem;line-height:1.1;margin-bottom:.3rem;">Heading 1 — Display</h1>
+      <h2 style="font-size:1.6rem;font-weight:700;margin-bottom:.3rem;">Heading 2 — Section title</h2>
+      <h3 style="font-size:1.2rem;font-weight:600;margin-bottom:.3rem;">Heading 3 — Subsection</h3>
+      <p style="margin-bottom:.3rem;">Body text — comfortable reading size with generous line-height. The quick brown fox jumps over the lazy dog.</p>
+      <small style="color:var(--muted);display:block;margin-bottom:.3rem;">Small text — captions, metadata, helper text</small>
+      <p><span class="grad-text" style="font-size:1.3rem;">Gradient text using background-clip</span></p>
+    </div>
+
+    <div class="tags">
+      <span class="tag b">font-family</span><span class="tag b">font-size</span><span class="tag b">font-weight</span><span class="tag b">line-height</span>
+      <span class="tag b">letter-spacing</span><span class="tag b">text-align</span><span class="tag b">text-transform</span><span class="tag b">text-decoration</span>
+      <span class="tag b">text-shadow</span><span class="tag b">word-spacing</span><span class="tag b">white-space</span><span class="tag b">text-overflow</span>
+    </div>
+  </div>
+</section>
+
+<!-- 20 · Colors & Gradients -->
+<section class="section" id="colors">
+  <div class="container">
+    <p class="section-label">20 — Visual</p>
+    <h2>Colors &amp; Gradients</h2>
+    <p class="intro-text">CSS supports multiple colour formats. Gradients are created with <code>linear-gradient()</code>, <code>radial-gradient()</code>, or <code>conic-gradient()</code>.</p>
+
+    <div class="demo">
+      <div class="demo-lbl">Colour formats</div>
+      <div class="color-row">
+        <div class="chip"><div class="swatch" style="background:#c84b2f;"></div><span>#c84b2f</span><span>HEX</span></div>
+        <div class="chip"><div class="swatch" style="background:rgb(37,99,235);"></div><span>rgb(37,99,235)</span><span>RGB</span></div>
+        <div class="chip"><div class="swatch" style="background:hsl(123,43%,39%);"></div><span>hsl(123,43%,39%)</span><span>HSL</span></div>
+        <div class="chip"><div class="swatch" style="background:rgba(200,75,47,.4);"></div><span>rgba(..,0.4)</span><span>Alpha</span></div>
+        <div class="chip"><div class="swatch" style="background:oklch(0.65 0.2 30);"></div><span>oklch</span><span>Modern</span></div>
+        <div class="chip"><div class="swatch" style="background:tomato;"></div><span>tomato</span><span>Named</span></div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Gradient types</div>
+      <div class="color-row">
+        <div class="chip"><div class="swatch" style="background:linear-gradient(to right,#c84b2f,#2563eb);width:90px;height:45px;"></div><span>linear</span></div>
+        <div class="chip"><div class="swatch" style="background:radial-gradient(circle,#c84b2f,#0f0e0d);width:90px;height:45px;"></div><span>radial</span></div>
+        <div class="chip"><div class="swatch" style="background:conic-gradient(#c84b2f,#2563eb,#16a34a,#c84b2f);width:90px;height:45px;"></div><span>conic</span></div>
+        <div class="chip"><div class="swatch" style="background:repeating-linear-gradient(45deg,#c84b2f 0,#c84b2f 10px,white 10px,white 20px);width:90px;height:45px;"></div><span>repeating</span></div>
+        <div class="chip"><div class="swatch" style="background:linear-gradient(135deg,#f97316 0%,#ec4899 50%,#8b5cf6 100%);width:90px;height:45px;"></div><span>mesh</span></div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary">Primary</button>
+      <button class="btn btn-outline">Outline</button>
+      <button class="btn btn-blue">Blue</button>
+      <button class="btn btn-pill">Pill</button>
+      <button class="btn btn-icon">⚡ Icon btn</button>
+    </div>
+  </div>
+</section>
+
+<!-- 21 · Backgrounds -->
+<section class="section" id="backgrounds">
+  <div class="container">
+    <p class="section-label">21 — Visual</p>
+    <h2>Backgrounds</h2>
+    <p class="intro-text">The <code>background</code> shorthand combines color, image, position, size, and repeat in one line.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">backgrounds.css</span></div>
+      <pre><span class="s">.box</span> {
+  <span class="p">background-color</span>:      <span class="n">#f5f2ed</span>;
+  <span class="p">background-image</span>:      <span class="n">url('texture.jpg')</span>;
+  <span class="p">background-size</span>:       <span class="n">cover</span>;      <span class="c">/* cover | contain | 100% */</span>
+  <span class="p">background-position</span>:   <span class="n">center</span>;
+  <span class="p">background-repeat</span>:     <span class="n">no-repeat</span>;  <span class="c">/* repeat | repeat-x | repeat-y */</span>
+  <span class="p">background-attachment</span>: <span class="n">fixed</span>;      <span class="c">/* parallax effect */</span>
+  <span class="p">background-clip</span>:       <span class="n">text</span>;       <span class="c">/* gradient text trick */</span>
+}
+
+<span class="c">/* Shorthand */</span>
+<span class="p">background</span>: <span class="n">url('bg.jpg') center/cover no-repeat #f5f2ed</span>;
+
+<span class="c">/* Multiple backgrounds stacked */</span>
+<span class="p">background</span>:
+  <span class="n">linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4))</span>,
+  <span class="n">url('photo.jpg') center/cover</span>;</pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Background styles</div>
+      <div class="bg-row">
+        <div class="bg1 bg-box">solid</div>
+        <div class="bg2 bg-box">linear</div>
+        <div class="bg3 bg-box">blue→purple</div>
+        <div class="bg4 bg-box">radial</div>
+        <div class="bg5 bg-box">repeating</div>
+        <div class="bg6 bg-box">mesh</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 22 · Borders -->
+<section class="section" id="borders">
+  <div class="container">
+    <p class="section-label">22 — Visual</p>
+    <h2>Borders &amp; Border-radius</h2>
+    <p class="intro-text"><code>border</code> accepts width, style, and colour. <code>border-radius</code> rounds corners — set to <code>50%</code> for circles, <code>999px</code> for pills.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">borders.css</span></div>
+      <pre><span class="p">border</span>:         <span class="n">2px solid #ccc</span>;      <span class="c">/* width style color */</span>
+<span class="p">border-style</span>:   <span class="n">solid | dashed | dotted | double | none</span>;
+<span class="p">border-width</span>:   <span class="n">1px</span>;
+<span class="p">border-color</span>:   <span class="n">#c84b2f</span>;
+<span class="p">border-top</span>:     <span class="n">3px solid var(--accent)</span>; <span class="c">/* one side only */</span>
+
+<span class="p">border-radius</span>:  <span class="n">8px</span>;              <span class="c">/* all corners */</span>
+<span class="p">border-radius</span>:  <span class="n">8px 0 8px 0</span>;     <span class="c">/* top-left top-right bottom-right bottom-left */</span>
+<span class="p">border-radius</span>:  <span class="n">50%</span>;              <span class="c">/* circle */</span>
+<span class="p">border-radius</span>:  <span class="n">999px</span>;            <span class="c">/* pill */</span>
+
+<span class="c">/* Gradient border trick */</span>
+<span class="s">.grad-border</span> {
+  <span class="p">border</span>: <span class="n">2px solid transparent</span>;
+  <span class="p">background</span>: <span class="n">linear-gradient(white,white) padding-box</span>,
+              <span class="n">linear-gradient(135deg,#c84b2f,#2563eb) border-box</span>;
+}</pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Border styles</div>
+      <div class="border-row">
+        <div class="bdr bdr1">solid</div>
+        <div class="bdr bdr2">dashed</div>
+        <div class="bdr bdr3">dotted</div>
+        <div class="bdr bdr4">double</div>
+        <div class="bdr bdr5">bottom only</div>
+        <div class="bdr bdr6">pill</div>
+        <div class="bdr bdr7">mixed radius</div>
+        <div class="bdr bdr8">gradient border</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 23 · Shadows -->
+<section class="section" id="shadows">
+  <div class="container">
+    <p class="section-label">23 — Visual</p>
+    <h2>Shadows</h2>
+    <p class="intro-text"><code>box-shadow</code> adds shadows outside (or inside with <code>inset</code>) a box. <code>text-shadow</code> works the same for text. Multiple shadows can be comma-separated.</p>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">shadows.css</span></div>
+      <pre><span class="c">/* box-shadow: offset-x offset-y blur spread color */</span>
+<span class="p">box-shadow</span>: <span class="n">2px 2px 4px rgba(0,0,0,0.1)</span>;     <span class="c">/* subtle */</span>
+<span class="p">box-shadow</span>: <span class="n">0 4px 12px rgba(0,0,0,0.15)</span>;    <span class="c">/* card shadow */</span>
+<span class="p">box-shadow</span>: <span class="n">0 8px 30px rgba(0,0,0,0.2)</span>;     <span class="c">/* elevated */</span>
+<span class="p">box-shadow</span>: <span class="n">0 0 0 3px #c84b2f</span>;              <span class="c">/* ring/focus */</span>
+<span class="p">box-shadow</span>: <span class="n">inset 0 2px 8px rgba(0,0,0,.15)</span>;<span class="c">/* inner shadow */</span>
+<span class="p">box-shadow</span>: <span class="n">4px 4px 0 #c84b2f</span>;              <span class="c">/* hard shadow */</span>
+
+<span class="c">/* Multiple shadows */</span>
+<span class="p">box-shadow</span>: <span class="n">0 1px 2px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.12)</span>;
+
+<span class="p">text-shadow</span>: <span class="n">1px 1px 2px rgba(0,0,0,.2)</span>;</pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Shadow styles</div>
+      <div class="shadow-row">
+        <div class="shadow-box sh1"><span style="font-size:1.2rem">□</span><span>subtle</span></div>
+        <div class="shadow-box sh2"><span style="font-size:1.2rem">□</span><span>card</span></div>
+        <div class="shadow-box sh3"><span style="font-size:1.2rem">□</span><span>elevated</span></div>
+        <div class="shadow-box sh4"><span style="font-size:1.2rem">□</span><span>ring</span></div>
+        <div class="shadow-box sh5"><span style="font-size:1.2rem">□</span><span>inset</span></div>
+        <div class="shadow-box sh6"><span style="font-size:1.2rem">□</span><span>hard</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 24 · Opacity & Visibility -->
+<section class="section" id="opacity">
+  <div class="container">
+    <p class="section-label">24 — Visual</p>
+    <h2>Opacity &amp; Visibility</h2>
+    <p class="intro-text">Three ways to hide an element — each behaves differently in layout and interactivity.</p>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>Property</th><th>Hidden?</th><th>Keeps space?</th><th>Clickable?</th></tr></thead>
+      <tbody>
+        <tr><td><code>opacity: 0</code></td><td>✅ invisible</td><td>✅ yes</td><td>✅ yes (still blocks clicks)</td></tr>
+        <tr><td><code>visibility: hidden</code></td><td>✅ invisible</td><td>✅ yes</td><td>❌ no</td></tr>
+        <tr><td><code>display: none</code></td><td>✅ invisible</td><td>❌ no</td><td>❌ no</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="demo">
+      <div class="demo-lbl">opacity levels</div>
+      <div class="opacity-row">
+        <div class="op-box" style="opacity:1.0;">1.0</div>
+        <div class="op-box" style="opacity:0.8;">0.8</div>
+        <div class="op-box" style="opacity:0.6;">0.6</div>
+        <div class="op-box" style="opacity:0.4;">0.4</div>
+        <div class="op-box" style="opacity:0.2;">0.2</div>
+        <div class="op-box" style="opacity:0.1;">0.1</div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">opacity.css</span></div>
+      <pre><span class="p">opacity</span>:    <span class="n">0.8</span>;          <span class="c">/* 0 = invisible, 1 = fully visible */</span>
+<span class="p">visibility</span>: <span class="n">hidden</span>;       <span class="c">/* invisible but keeps space */</span>
+<span class="p">display</span>:    <span class="n">none</span>;         <span class="c">/* removed from layout entirely */</span>
+
+<span class="c">/* rgba() for transparent backgrounds without affecting children */</span>
+<span class="p">background</span>: <span class="n">rgba(200, 75, 47, 0.15)</span>;</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 25 · Filters -->
+<section class="section" id="filters">
+  <div class="container">
+    <p class="section-label">25 — Visual</p>
+    <h2>CSS Filters</h2>
+    <p class="intro-text"><code>filter</code> applies graphical effects like blur, grayscale, sepia, and brightness directly to an element — great for image hover effects.</p>
+
+    <div class="demo">
+      <div class="demo-lbl">filter effects</div>
+      <div class="filter-row">
+        <div class="filter-box fb1"><div class="f-inner"></div><div class="f-label">none</div></div>
+        <div class="filter-box fb2"><div class="f-inner"></div><div class="f-label">grayscale(1)</div></div>
+        <div class="filter-box fb3"><div class="f-inner"></div><div class="f-label">blur(3px)</div></div>
+        <div class="filter-box fb4"><div class="f-inner"></div><div class="f-label">sepia(1)</div></div>
+        <div class="filter-box fb5"><div class="f-inner"></div><div class="f-label">brightness(1.5)</div></div>
+        <div class="filter-box fb6"><div class="f-inner"></div><div class="f-label">contrast(2)</div></div>
+        <div class="filter-box fb7"><div class="f-inner"></div><div class="f-label">hue-rotate(90°)</div></div>
+        <div class="filter-box fb8"><div class="f-inner"></div><div class="f-label">invert(1)</div></div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">filters.css</span></div>
+      <pre><span class="p">filter</span>: <span class="n">grayscale(1)</span>;
+<span class="p">filter</span>: <span class="n">blur(4px)</span>;
+<span class="p">filter</span>: <span class="n">brightness(0.8)</span>;    <span class="c">/* &lt;1 darkens, &gt;1 brightens */</span>
+<span class="p">filter</span>: <span class="n">contrast(1.5)</span>;
+<span class="p">filter</span>: <span class="n">sepia(0.6)</span>;
+<span class="p">filter</span>: <span class="n">hue-rotate(90deg)</span>;
+<span class="p">filter</span>: <span class="n">invert(1)</span>;
+<span class="p">filter</span>: <span class="n">saturate(2)</span>;
+<span class="p">filter</span>: <span class="n">drop-shadow(2px 4px 6px black)</span>; <span class="c">/* respects transparency */</span>
+
+<span class="c">/* Combine multiple filters */</span>
+<span class="p">filter</span>: <span class="n">brightness(0.9) contrast(1.1) saturate(1.2)</span>;
+
+<span class="c">/* Hover effect */</span>
+<span class="s">img</span>       { <span class="p">filter</span>: <span class="n">grayscale(1)</span>; <span class="p">transition</span>: <span class="n">filter .3s</span>; }
+<span class="s">img:hover</span> { <span class="p">filter</span>: <span class="n">none</span>; }</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 26 · Cursor -->
+<section class="section" id="cursor">
+  <div class="container">
+    <p class="section-label">26 — Visual</p>
+    <h2>Cursor</h2>
+    <p class="intro-text">The <code>cursor</code> property changes the mouse cursor when hovering over an element. Hover over each box below to see the effect.</p>
+
+    <div class="cursor-row">
+      <div class="cur cur-pointer">pointer</div>
+      <div class="cur cur-crosshair">crosshair</div>
+      <div class="cur cur-grab">grab</div>
+      <div class="cur cur-zoom">zoom-in</div>
+      <div class="cur cur-text">text</div>
+      <div class="cur cur-not">not-allowed</div>
+      <div class="cur cur-wait">wait</div>
+      <div class="cur cur-help">help</div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">cursor.css</span></div>
+      <pre><span class="p">cursor</span>: <span class="n">pointer</span>;      <span class="c">/* hand — for buttons and links */</span>
+<span class="p">cursor</span>: <span class="n">default</span>;      <span class="c">/* arrow */</span>
+<span class="p">cursor</span>: <span class="n">crosshair</span>;    <span class="c">/* for drawing tools */</span>
+<span class="p">cursor</span>: <span class="n">grab</span>;         <span class="c">/* draggable item */</span>
+<span class="p">cursor</span>: <span class="n">grabbing</span>;     <span class="c">/* while dragging */</span>
+<span class="p">cursor</span>: <span class="n">zoom-in</span>;      <span class="c">/* image gallery */</span>
+<span class="p">cursor</span>: <span class="n">not-allowed</span>;  <span class="c">/* disabled state */</span>
+<span class="p">cursor</span>: <span class="n">wait</span>;         <span class="c">/* loading state */</span>
+<span class="p">cursor</span>: <span class="n">text</span>;         <span class="c">/* text input area */</span>
+<span class="p">cursor</span>: <span class="n">none</span>;         <span class="c">/* hide cursor entirely */</span>
+<span class="p">cursor</span>: <span class="n">url('custom.cur'), auto</span>; <span class="c">/* custom image */</span></pre>
+    </div>
+  </div>
+</section>
+
+
+<!-- CHAPTER 5 — ADVANCED CSS -->
+<div class="chapter-divider" id="advanced-chapter">
+  <div class="ch-num">05</div>
+  <div><h2>Advanced CSS</h2><p>Pseudo-classes, transforms, transitions, animations, media queries</p></div>
+</div>
+
+<!-- 27 · Pseudo-classes & Elements -->
+<section class="section" id="pseudo">
+  <div class="container">
+    <p class="section-label">27 — Advanced</p>
+    <h2>Pseudo-classes &amp; Pseudo-elements</h2>
+    <p class="intro-text"><strong>Pseudo-classes</strong> (<code>:</code>) target elements in a specific <em>state</em>. <strong>Pseudo-elements</strong> (<code>::</code>) target a specific <em>part</em> of an element.</p>
+
+    <h3 class="sub">Pseudo-classes</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Pseudo-class</th><th>When it applies</th></tr></thead>
+      <tbody>
+        <tr><td><code>:hover</code></td><td>Mouse is over the element</td></tr>
+        <tr><td><code>:focus</code></td><td>Element is focused (keyboard or click)</td></tr>
+        <tr><td><code>:active</code></td><td>Element is being clicked</td></tr>
+        <tr><td><code>:visited</code></td><td>Link has been visited</td></tr>
+        <tr><td><code>:checked</code></td><td>Checkbox or radio is checked</td></tr>
+        <tr><td><code>:disabled</code></td><td>Form element is disabled</td></tr>
+        <tr><td><code>:first-child</code></td><td>First child of its parent</td></tr>
+        <tr><td><code>:last-child</code></td><td>Last child of its parent</td></tr>
+        <tr><td><code>:nth-child(n)</code></td><td>The nth child — <code>nth-child(odd)</code>, <code>nth-child(3n)</code></td></tr>
+        <tr><td><code>:not(selector)</code></td><td>Element that does NOT match selector</td></tr>
+        <tr><td><code>:empty</code></td><td>Element with no children</td></tr>
+        <tr><td><code>:is()</code></td><td>Matches any selector in the list: <code>:is(h1,h2,h3)</code></td></tr>
+        <tr><td><code>:where()</code></td><td>Like <code>:is()</code> but with zero specificity</td></tr>
+        <tr><td><code>:has()</code></td><td>Parent selector: <code>div:has(img)</code></td></tr>
+      </tbody>
+    </table></div>
+
+    <h3 class="sub">Pseudo-elements</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Pseudo-element</th><th>What it targets</th></tr></thead>
+      <tbody>
+        <tr><td><code>::before</code></td><td>Inserts generated content before element's content</td></tr>
+        <tr><td><code>::after</code></td><td>Inserts generated content after element's content</td></tr>
+        <tr><td><code>::first-letter</code></td><td>First letter of a block element</td></tr>
+        <tr><td><code>::first-line</code></td><td>First line of a block element</td></tr>
+        <tr><td><code>::placeholder</code></td><td>Placeholder text in inputs</td></tr>
+        <tr><td><code>::selection</code></td><td>Text selected by the user</td></tr>
+        <tr><td><code>::marker</code></td><td>List item bullet or number</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="demo pseudo-demo">
+      <div class="demo-lbl">Live examples</div>
+      <p>The <strong>::first-letter</strong> pseudo-element styles the first letter of this paragraph — making it large, serif, and red. Hover the links below to see <strong>:hover</strong> in action:</p>
+      <a href="#">Link (hover me)</a>
+      <a href="#">Another link</a>
+      <div class="pseudo-input" style="margin-top:.8rem;max-width:300px;">
+        <input type="text" placeholder="::placeholder demo — type here" style="width:100%;padding:.5rem .8rem;border:1.5px solid var(--border);border-radius:5px;font-size:.875rem;outline:none;" />
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">pseudo.css</span></div>
+      <pre><span class="s">a:hover</span>            { <span class="p">color</span>: <span class="n">var(--accent)</span>; }
+<span class="s">input:focus</span>        { <span class="p">box-shadow</span>: <span class="n">0 0 0 3px rgba(37,99,235,.2)</span>; }
+<span class="s">li:nth-child(odd)</span>  { <span class="p">background</span>: <span class="n">var(--cream)</span>; }
+<span class="s">button:active</span>      { <span class="p">transform</span>: <span class="n">scale(.97)</span>; }
+
+<span class="s">.badge::before</span> {
+  <span class="p">content</span>:    <span class="st">"● "</span>;        <span class="c">/* content is required for ::before/::after */</span>
+  <span class="p">color</span>:      <span class="n">var(--green)</span>;
+}
+
+<span class="s">p::first-letter</span> {
+  <span class="p">font-size</span>:  <span class="n">2.2rem</span>;
+  <span class="p">float</span>:      <span class="n">left</span>;
+  <span class="p">margin-right</span>: <span class="n">.1rem</span>;
+  <span class="p">color</span>:      <span class="n">var(--accent)</span>;
+}
+
+<span class="s">::selection</span> { <span class="p">background</span>: <span class="n">#c84b2f</span>; <span class="p">color</span>: <span class="n">white</span>; }</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 28 · Transforms -->
+<section class="section" id="transforms">
+  <div class="container">
+    <p class="section-label">28 — Advanced</p>
+    <h2>CSS Transforms</h2>
+    <p class="intro-text"><code>transform</code> moves, rotates, scales, or skews an element <em>visually</em> without affecting the document layout. Multiple transforms can be chained.</p>
+
+    <div class="demo">
+      <div class="demo-lbl">Transform functions — hover to see outline</div>
+      <div class="transform-grid">
+        <div class="tf-box tf1"><span style="font-size:1.1rem">↻</span><span>rotate(15deg)</span></div>
+        <div class="tf-box tf2"><span style="font-size:1.1rem">⊕</span><span>scale(1.2)</span></div>
+        <div class="tf-box tf3"><span style="font-size:1.1rem">⊘</span><span>skewX(10deg)</span></div>
+        <div class="tf-box tf4"><span style="font-size:1.1rem">→</span><span>translate()</span></div>
+        <div class="tf-box tf5"><span style="font-size:1.1rem">↔</span><span>scaleX(0.7)</span></div>
+        <div class="tf-box tf6"><span style="font-size:1.1rem">✦</span><span>rotate+scale</span></div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">transforms.css</span></div>
+      <pre><span class="p">transform</span>: <span class="n">rotate(15deg)</span>;
+<span class="p">transform</span>: <span class="n">scale(1.5)</span>;             <span class="c">/* scale(x, y) */</span>
+<span class="p">transform</span>: <span class="n">translate(20px, -10px)</span>; <span class="c">/* move x, y */</span>
+<span class="p">transform</span>: <span class="n">translateX(50%)</span>;        <span class="c">/* 50% of own width */</span>
+<span class="p">transform</span>: <span class="n">skewX(15deg)</span>;
+<span class="p">transform</span>: <span class="n">skewY(5deg)</span>;
+
+<span class="c">/* Chain multiple: applied right to left */</span>
+<span class="p">transform</span>: <span class="n">rotate(-5deg) scale(1.1) translateY(-4px)</span>;
+
+<span class="c">/* 3D transforms */</span>
+<span class="p">transform</span>: <span class="n">rotateY(180deg)</span>;    <span class="c">/* flip card effect */</span>
+<span class="p">transform</span>: <span class="n">perspective(500px) rotateX(10deg)</span>;
+
+<span class="c">/* transform-origin: pivot point (default: center) */</span>
+<span class="p">transform-origin</span>: <span class="n">top left</span>;
+<span class="p">transform-origin</span>: <span class="n">50% 100%</span>; <span class="c">/* bottom center */</span>
+
+<span class="c">/* Common centering trick */</span>
+<span class="s">.center</span> {
+  <span class="p">position</span>:  <span class="n">absolute</span>;
+  <span class="p">top</span>:       <span class="n">50%</span>;
+  <span class="p">left</span>:      <span class="n">50%</span>;
+  <span class="p">transform</span>: <span class="n">translate(-50%, -50%)</span>;
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 29 · Transitions -->
+<section class="section" id="transitions">
+  <div class="container">
+    <p class="section-label">29 — Advanced</p>
+    <h2>Transitions</h2>
+    <p class="intro-text">Transitions animate a CSS property from one value to another when it changes (usually on <code>:hover</code> or via JavaScript). They require a <strong>start state</strong> and an <strong>end state</strong>.</p>
+
+    <div class="demo">
+      <div class="demo-lbl">Hover this box</div>
+      <div class="trans-box">Hover me — watch colour, shape &amp; scale change</div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">transitions.css</span></div>
+      <pre><span class="c">/* transition: property duration timing-function delay */</span>
+
+<span class="s">.btn</span> {
+  <span class="p">background</span>:  <span class="n">var(--accent)</span>;
+  <span class="p">transition</span>:  <span class="n">background .3s ease</span>;          <span class="c">/* one property */</span>
+  <span class="p">transition</span>:  <span class="n">all .3s ease</span>;                 <span class="c">/* all properties */</span>
+  <span class="p">transition</span>:  <span class="n">background .3s, transform .2s</span>; <span class="c">/* multiple */</span>
+}
+<span class="s">.btn:hover</span> { <span class="p">background</span>: <span class="n">var(--accent2)</span>; <span class="p">transform</span>: <span class="n">scale(1.05)</span>; }
+
+<span class="c">/* Timing functions */</span>
+<span class="p">transition-timing-function</span>: <span class="n">ease</span>;         <span class="c">/* slow-fast-slow (default) */</span>
+<span class="p">transition-timing-function</span>: <span class="n">linear</span>;       <span class="c">/* constant speed */</span>
+<span class="p">transition-timing-function</span>: <span class="n">ease-in</span>;      <span class="c">/* slow start */</span>
+<span class="p">transition-timing-function</span>: <span class="n">ease-out</span>;     <span class="c">/* slow end */</span>
+<span class="p">transition-timing-function</span>: <span class="n">ease-in-out</span>;
+<span class="p">transition-timing-function</span>: <span class="n">cubic-bezier(0.68,-0.55,0.27,1.55)</span>; <span class="c">/* bounce */</span></pre>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">💡</div>
+      <div><strong>Performance tip</strong> Only animate <code>transform</code> and <code>opacity</code> for smooth 60fps animations. Animating <code>width</code>, <code>height</code>, <code>margin</code>, or <code>top/left</code> triggers layout recalculation and can cause jank.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 30 · Animations -->
+<section class="section" id="animations">
+  <div class="container">
+    <p class="section-label">30 — Advanced</p>
+    <h2>CSS Animations</h2>
+    <p class="intro-text">Animations use <code>@keyframes</code> to define states over time, then the <code>animation</code> property to apply them. Unlike transitions, animations can loop, reverse, and run automatically.</p>
+
+    <div class="demo">
+      <div class="demo-lbl">Live animations (running continuously)</div>
+      <div class="anim-row">
+        <div class="anim-box a-pulse"><span style="font-size:1.5rem">💗</span><span>pulse</span></div>
+        <div class="anim-box a-spin"><span style="font-size:1.5rem">⚙️</span><span>spin</span></div>
+        <div class="anim-box a-bounce"><span style="font-size:1.5rem">🏀</span><span>bounce</span></div>
+        <div class="anim-box a-slide"><span style="font-size:1.5rem">→</span><span>slide-in</span></div>
+        <div class="anim-box a-shake"><span style="font-size:1.5rem">⚠️</span><span>shake</span></div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">animations.css</span></div>
+      <pre><span class="c">/* 1. Define keyframes */</span>
+<span class="k">@keyframes</span> <span class="n">bounce</span> {
+  <span class="n">0%, 100%</span> { <span class="p">transform</span>: <span class="n">translateY(0)</span>; }
+  <span class="n">50%</span>       { <span class="p">transform</span>: <span class="n">translateY(-20px)</span>; }
+}
+
+<span class="k">@keyframes</span> <span class="n">fadeIn</span> {
+  <span class="n">from</span> { <span class="p">opacity</span>: <span class="n">0</span>; <span class="p">transform</span>: <span class="n">translateY(15px)</span>; }
+  <span class="n">to</span>   { <span class="p">opacity</span>: <span class="n">1</span>; <span class="p">transform</span>: <span class="n">translateY(0)</span>; }
+}
+
+<span class="k">@keyframes</span> <span class="n">spin</span> {
+  <span class="n">to</span> { <span class="p">transform</span>: <span class="n">rotate(360deg)</span>; }
+}
+
+<span class="c">/* 2. Apply the animation */</span>
+<span class="s">.loading</span> {
+  <span class="p">animation</span>:            <span class="n">spin</span>;       <span class="c">/* name */</span>
+  <span class="p">animation-duration</span>:   <span class="n">1s</span>;         <span class="c">/* how long */</span>
+  <span class="p">animation-timing-function</span>: <span class="n">linear</span>;
+  <span class="p">animation-iteration-count</span>: <span class="n">infinite</span>; <span class="c">/* loop forever */</span>
+  <span class="p">animation-direction</span>:  <span class="n">normal</span>;     <span class="c">/* normal | reverse | alternate */</span>
+  <span class="p">animation-fill-mode</span>:  <span class="n">both</span>;       <span class="c">/* keeps final state */</span>
+  <span class="p">animation-delay</span>:      <span class="n">0.2s</span>;       <span class="c">/* wait before starting */</span>
+}
+
+<span class="c">/* Shorthand */</span>
+<span class="p">animation</span>: <span class="n">fadeIn .5s ease .2s both</span>;  <span class="c">/* name dur timing delay fill */</span>
+
+<span class="c">/* Staggered entrance (animation-delay per child) */</span>
+<span class="s">.item:nth-child(1)</span> { <span class="p">animation-delay</span>: <span class="n">0s</span>; }
+<span class="s">.item:nth-child(2)</span> { <span class="p">animation-delay</span>: <span class="n">.1s</span>; }
+<span class="s">.item:nth-child(3)</span> { <span class="p">animation-delay</span>: <span class="n">.2s</span>; }</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 31 · Media Queries -->
+<section class="section" id="media-queries">
+  <div class="container">
+    <p class="section-label">31 — Advanced</p>
+    <h2>Media Queries &amp; Responsive Design</h2>
+    <p class="intro-text">Media queries apply CSS rules only when specific conditions are met — most commonly, the viewport width. This is the foundation of <strong>responsive design</strong>.</p>
+
+    <div class="mq-demo">
+      <div class="mq-device"><div class="mq-icon">📱</div><div class="mq-break">≤ 640px</div><div class="mq-label">Mobile</div></div>
+      <div class="mq-device"><div class="mq-icon">📋</div><div class="mq-break">641–1024px</div><div class="mq-label">Tablet</div></div>
+      <div class="mq-device"><div class="mq-icon">🖥️</div><div class="mq-break">≥ 1025px</div><div class="mq-label">Desktop</div></div>
+      <div class="mq-device"><div class="mq-icon">🌙</div><div class="mq-break">prefers-color-scheme</div><div class="mq-label">Dark Mode</div></div>
+      <div class="mq-device"><div class="mq-icon">♿</div><div class="mq-break">prefers-reduced-motion</div><div class="mq-label">Accessibility</div></div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><div class="dots"><span></span><span></span><span></span></div><span class="code-title">responsive.css</span></div>
+      <pre><span class="c">/* ── Mobile First approach ─────────────────── */</span>
+<span class="c">/* Write base styles for mobile, then expand */</span>
+
+<span class="s">.grid</span> {
+  <span class="p">display</span>: <span class="n">grid</span>;
+  <span class="p">grid-template-columns</span>: <span class="n">1fr</span>;    <span class="c">/* 1 column on mobile */</span>
+  <span class="p">gap</span>: <span class="n">1rem</span>;
+}
+
+<span class="k">@media</span> (<span class="p">min-width</span>: <span class="n">640px</span>) {           <span class="c">/* tablet and up */</span>
+  <span class="s">.grid</span> { <span class="p">grid-template-columns</span>: <span class="n">1fr 1fr</span>; }
+}
+
+<span class="k">@media</span> (<span class="p">min-width</span>: <span class="n">1024px</span>) {          <span class="c">/* desktop */</span>
+  <span class="s">.grid</span> { <span class="p">grid-template-columns</span>: <span class="n">repeat(3, 1fr)</span>; }
+}
+
+<span class="c">/* ── Dark Mode ───────────────────────────── */</span>
+<span class="k">@media</span> (prefers-color-scheme: dark) {
+  <span class="s">body</span>  { <span class="p">background</span>: <span class="n">#1a1917</span>; <span class="p">color</span>: <span class="n">#e8e2d9</span>; }
+  <span class="s">.card</span> { <span class="p">background</span>: <span class="n">#252320</span>; <span class="p">border-color</span>: <span class="n">#333</span>; }
+}
+
+<span class="c">/* ── Accessibility ───────────────────────── */</span>
+<span class="k">@media</span> (prefers-reduced-motion: reduce) {
+  <span class="s">*</span> { <span class="p">animation</span>: <span class="n">none</span> <span class="k">!important</span>; <span class="p">transition</span>: <span class="n">none</span> <span class="k">!important</span>; }
+}
+
+<span class="c">/* ── Print ───────────────────────────────── */</span>
+<span class="k">@media</span> print {
+  <span class="s">.nav, .footer</span> { <span class="p">display</span>: <span class="n">none</span>; }
+  <span class="s">body</span> { <span class="p">font-size</span>: <span class="n">12pt</span>; <span class="p">color</span>: <span class="n">black</span>; }
+}
+
+<span class="c">/* ── Flexible without media queries ─────── */</span>
+<span class="s">.auto-grid</span> {
+  <span class="p">grid-template-columns</span>: <span class="n">repeat(auto-fill, minmax(200px, 1fr))</span>;
+}
+<span class="s">h1</span> { <span class="p">font-size</span>: <span class="n">clamp(1.8rem, 4vw, 3.5rem)</span>; }
+<span class="s">p</span>  { <span class="p">width</span>: <span class="n">min(640px, 90%)</span>; }</pre>
+    </div>
+
+    <div class="demo">
+      <div class="demo-lbl">Responsive box — resize your browser to see it react</div>
+      <div class="rwd-box">
+        <p style="font-size:.8rem;font-weight:600;">Viewport width: <span id="vw-display">—</span></p>
+        <p style="font-size:.72rem;margin-top:.3rem;color:var(--muted);">Background changes at 600px breakpoint</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">📱</div>
+      <div><strong>Mobile-first is best practice</strong> Write your default CSS for small screens, then use <code>min-width</code> media queries to progressively enhance for larger screens. This produces leaner, more maintainable CSS than desktop-first.</div>
+    </div>
+
+    <div class="tags">
+      <span class="tag r">@media</span>
+      <span class="tag">min-width</span><span class="tag">max-width</span><span class="tag">min-height</span>
+      <span class="tag">prefers-color-scheme</span><span class="tag">prefers-reduced-motion</span>
+      <span class="tag">orientation</span><span class="tag">print</span><span class="tag">hover</span>
+      <span class="tag b">clamp()</span><span class="tag b">min()</span><span class="tag b">max()</span>
+      <span class="tag g">auto-fill</span><span class="tag g">auto-fit</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Built with <span class="ft-accent">♥</span> by <strong>Asel</strong> &nbsp;·&nbsp; HTML &amp; CSS Complete Learning Guide &nbsp;·&nbsp; <span class="ft-accent">31 Concepts · 5 Chapters</span></p>
+  <p style="margin-top:.5rem;font-size:.65rem;">This page itself is a live demonstration of every concept documented above.</p>
+</footer>
+
+<script>
+  // Progress bar
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const max = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = (window.scrollY / max * 100) + '%';
+  });
+
+  // Viewport width display
+  const vwDisplay = document.getElementById('vw-display');
+  function updateVW() { vwDisplay.textContent = window.innerWidth + 'px'; }
+  updateVW();
+  window.addEventListener('resize', updateVW);
+</script>
+</body>
+</html>
