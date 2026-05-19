@@ -18,7 +18,7 @@
                     <th>Price</th>
                     <th>Stock</th>
                     <th>Status</th>
-                    <th class="w-56">Actions</th>
+                    <th class="w-72">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,15 +40,18 @@
                         <td>
                             <x-ui.badge variant="{{ $product->statusBadgeVariant() }}">{{ $product->statusLabel() }}</x-ui.badge>
                         </td>
-                        <td>
-                            <div class="flex flex-wrap items-center gap-2">
+                        <td class="whitespace-nowrap">
+                            <div class="flex items-center gap-2">
                                 <x-ui.button href="{{ route('products.show', $product) }}" variant="outline" size="sm">View</x-ui.button>
                                 <x-ui.button href="{{ route('products.edit', $product) }}" variant="secondary" size="sm">Edit</x-ui.button>
-                                <form method="post" action="{{ route('products.destroy', $product) }}" onsubmit="return confirm('Delete this product?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-ui.button type="submit" variant="danger" size="sm">Delete</x-ui.button>
-                                </form>
+                                <x-ui.delete-confirmation
+                                    id="delete-product-{{ $product->id }}"
+                                    action="{{ route('products.destroy', $product) }}"
+                                    title="Delete product"
+                                    description="This will permanently delete {{ $product->name }} from the catalog."
+                                    triggerLabel="Delete"
+                                    confirmLabel="Delete Product"
+                                />
                             </div>
                         </td>
                     </tr>
