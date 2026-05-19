@@ -8,7 +8,7 @@
         <x-ui.button href="{{ route('tickets.show', $ticket) }}" variant="outline">View Ticket</x-ui.button>
     </x-ui.page-header>
 
-    <form method="post" action="{{ route('tickets.update', $ticket) }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('tickets.update', $ticket) }}" enctype="multipart/form-data" novalidate>
         @csrf
         @method('PUT')
         <x-ui.card>

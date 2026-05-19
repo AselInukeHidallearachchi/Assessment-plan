@@ -36,6 +36,22 @@ class TicketWorkflowTest extends TestCase
         $response->assertSessionHasErrors(['title']);
     }
 
+    public function test_create_form_shows_laravel_field_errors(): void
+    {
+        $this->get(route('tickets.create'))
+            ->assertOk()
+            ->assertSee('novalidate', false);
+
+        $this->followingRedirects()
+            ->from(route('tickets.create'))
+            ->post(route('tickets.store'), [])
+            ->assertOk()
+            ->assertSee('The title field is required.')
+            ->assertSee('The requester name field is required.')
+            ->assertSee('The requester email field is required.')
+            ->assertSee('The description field is required.');
+    }
+
     public function test_can_create_ticket_with_attachment(): void
     {
         Storage::fake('public');

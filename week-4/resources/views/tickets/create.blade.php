@@ -8,7 +8,7 @@
         <x-ui.button href="{{ route('tickets.index') }}" variant="outline">Back to Queue</x-ui.button>
     </x-ui.page-header>
 
-    <form method="post" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('tickets.store') }}" enctype="multipart/form-data" novalidate>
         @csrf
         <x-ui.card>
             <x-ui.card-header>
