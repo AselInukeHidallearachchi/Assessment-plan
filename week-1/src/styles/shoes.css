@@ -1,7 +1,4 @@
-/* 
-  shoes.css
-  Adapted styles for Great Shoes Inc.
-*/
+
 
 :root {
   --clr-accent: #008951;
@@ -40,7 +37,7 @@ section {
   margin: 0 auto;
 }
 
-/* Button Component */
+
 .btn {
   display: inline-block;
   text-decoration: none;
@@ -64,7 +61,7 @@ section {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* Hero Section */
+
 .hero {
   color: #fff;
   text-align: center;
@@ -73,7 +70,7 @@ section {
   --clr-accent: #faa700;
 }
 
-/* Fallback for background-blend-mode if supported */
+
 @supports (background-blend-mode: multiply) {
   .hero {
     background: url('../assets/shoe-3.png'), radial-gradient(#444, #111);
@@ -97,7 +94,7 @@ section {
   margin: 0 auto;
 }
 
-/* Section Titles */
+
 .section-title {
   text-align: center;
   font-size: clamp(2.5rem, 5vw, 4rem);
@@ -105,7 +102,7 @@ section {
   margin-bottom: 4rem;
 }
 
-/* Flex Split Layout (Featured Products) */
+
 .featured {
   background-color: #f7f7f7;
 }
@@ -166,7 +163,7 @@ section {
   color: #17353d;
 }
 
-/* Advanced Product Layout (Shape-Outside) */
+
 .product {
   padding: 3rem;
   border-radius: 1rem;
@@ -189,14 +186,14 @@ section {
   max-width: 80%;
 }
 
-/* The magic shape-outside magic on larger screens */
+
 @media (min-width: 60rem) {
   .product {
     text-align: left;
     margin-bottom: 8rem;
     padding: 4rem;
   }
-  
+
   .product__title {
     margin-top: 0;
   }
@@ -205,12 +202,12 @@ section {
     float: right;
     width: 55%;
     margin: 0 -4rem 0 2rem;
-    /* Lets the text wrap around the image's non-transparent pixels */
+
     shape-outside: url(../assets/shoe-1.png);
     shape-margin: 1.5rem;
   }
 
-  /* Reversed layout for the middle shoe */
+
   .product.shoe-left .product__image {
     float: left;
     shape-outside: url(../assets/shoe-2.png);
@@ -218,7 +215,7 @@ section {
   }
 }
 
-/* Colors matching the images */
+
 .shoe-red {
   --clr-inner: #faa700;
   --clr-outer: #e48d00;
