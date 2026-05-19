@@ -1,57 +1,70 @@
 @extends('layouts.app', ['title' => 'Products'])
 
 @section('content')
-    <div class="between" style="margin-bottom: 12px;">
-        <h1 style="margin:0;">Product Catalog</h1>
-        <a class="btn btn-primary" href="{{ route('products.create') }}">Add Product</a>
-    </div>
+    <x-ui.page-header
+        title="Product Catalog"
+        description="A Week 2 Laravel CRUD module with Form Requests, handler/service layering, and clean Blade UI."
+    >
+        <x-ui.button href="{{ route('products.create') }}">Add Product</x-ui.button>
+    </x-ui.page-header>
 
-    <div class="card">
-        <table>
-            <thead>
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @forelse ($products as $product)
+    <x-ui.card class="overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="product-table">
+                <thead>
                 <tr>
-                    <td>
-                        @if ($product->image_path)
-                            <img class="thumb" src="{{ asset('storage/'.$product->image_path) }}" alt="{{ $product->name }}">
-                        @else
-                            <span class="placeholder-thumb">No image</span>
-                        @endif
-                    </td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ number_format((float) $product->price, 2) }}</td>
-                    <td>{{ $product->stock_qty }}</td>
-                    <td>{{ strtoupper($product->status) }}</td>
-                    <td class="row">
-                        <a class="btn" href="{{ route('products.show', $product) }}">View</a>
-                        <a class="btn" href="{{ route('products.edit', $product) }}">Edit</a>
-                        <form method="post" action="{{ route('products.destroy', $product) }}" onsubmit="return confirm('Delete this product?');">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger" type="submit">Delete</button>
-                        </form>
-                    </td>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th class="w-56">Actions</th>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="6" class="muted">No products found.</td>
-                </tr>
-            @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @forelse ($products as $product)
+                    <tr>
+                        <td>
+                            @if ($product->image_path)
+                                <img class="h-14 w-14 rounded-xl border border-border object-cover" src="{{ asset('storage/'.$product->image_path) }}" alt="{{ $product->name }}">
+                            @else
+                                <span class="inline-flex h-14 w-14 items-center justify-center rounded-xl border border-dashed border-input bg-muted text-center text-xs font-medium text-muted-foreground">No image</span>
+                            @endif
+                        </td>
+                        <td>
+                            <p class="font-bold text-foreground">{{ $product->name }}</p>
+                            <p class="mt-1 text-sm text-muted-foreground">{{ str($product->description ?: 'No description')->limit(54) }}</p>
+                        </td>
+                        <td class="font-semibold text-foreground">{{ $product->formattedPrice() }}</td>
+                        <td class="text-muted-foreground">{{ $product->stock_qty }}</td>
+                        <td>
+                            <x-ui.badge variant="{{ $product->statusBadgeVariant() }}">{{ $product->statusLabel() }}</x-ui.badge>
+                        </td>
+                        <td>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <x-ui.button href="{{ route('products.show', $product) }}" variant="outline" size="sm">View</x-ui.button>
+                                <x-ui.button href="{{ route('products.edit', $product) }}" variant="secondary" size="sm">Edit</x-ui.button>
+                                <form method="post" action="{{ route('products.destroy', $product) }}" onsubmit="return confirm('Delete this product?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-ui.button type="submit" variant="danger" size="sm">Delete</x-ui.button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center text-sm text-muted-foreground">
+                            No products found. Add your first catalog item to start the module demo.
+                        </td>
+                    </tr>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
 
-        <div style="margin-top: 12px;">
+        <div class="border-t border-border px-6 py-4">
             {{ $products->links() }}
         </div>
-    </div>
+    </x-ui.card>
 @endsection

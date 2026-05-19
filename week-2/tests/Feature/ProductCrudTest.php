@@ -44,6 +44,22 @@ class ProductCrudTest extends TestCase
         $response->assertSessionHasErrors(['status']);
     }
 
+    public function test_create_form_shows_laravel_field_errors(): void
+    {
+        $this->get(route('products.create'))
+            ->assertOk()
+            ->assertSee('novalidate', false);
+
+        $this->followingRedirects()
+            ->from(route('products.create'))
+            ->post(route('products.store'), [])
+            ->assertOk()
+            ->assertSee('The name field is required.')
+            ->assertSee('The price field is required.')
+            ->assertSee('The stock qty field is required.')
+            ->assertSee('The status field is required.');
+    }
+
     public function test_can_create_product_with_image_upload(): void
     {
         Storage::fake('public');

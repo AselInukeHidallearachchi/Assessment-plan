@@ -1,9 +1,74 @@
 @import 'tailwindcss';
 
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+@source '../../app/**/*.php';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views*.blade.php';
-@source '..*.js';
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-background: #f8fafc;
+    --color-foreground: #111827;
+    --color-card: #ffffff;
+    --color-card-foreground: #111827;
+    --color-popover: #ffffff;
+    --color-popover-foreground: #111827;
+    --color-primary: #111827;
+    --color-primary-foreground: #f9fafb;
+    --color-secondary: #e5e7eb;
+    --color-secondary-foreground: #111827;
+    --color-muted: #f3f4f6;
+    --color-muted-foreground: #6b7280;
+    --color-accent: #ecfdf5;
+    --color-accent-foreground: #065f46;
+    --color-destructive: #dc2626;
+    --color-destructive-foreground: #ffffff;
+    --color-border: #e5e7eb;
+    --color-input: #d1d5db;
+    --color-ring: #059669;
+}
+
+@layer base {
+    * {
+        border-color: var(--color-border);
+    }
+
+    body {
+        font-family: var(--font-sans);
+    }
+}
+
+@layer components {
+    .product-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .product-table th {
+        border-bottom: 1px solid var(--color-border);
+        padding: 0.875rem 1rem;
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-muted-foreground);
+    }
+
+    .product-table td {
+        border-bottom: 1px solid var(--color-border);
+        padding: 1rem;
+        vertical-align: middle;
+    }
+
+    .product-table tbody tr {
+        transition: background-color 150ms ease;
+    }
+
+    .product-table tbody tr:hover {
+        background-color: rgba(236, 253, 245, 0.6);
+    }
 }
