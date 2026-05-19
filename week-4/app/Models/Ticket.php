@@ -66,4 +66,41 @@ class Ticket extends Model
             'other',
         ];
     }
+
+    public function statusLabel(): string
+    {
+        return str($this->status)->replace('_', ' ')->headline()->toString();
+    }
+
+    public function priorityLabel(): string
+    {
+        return str($this->priority)->headline()->toString();
+    }
+
+    public function categoryLabel(): string
+    {
+        return str($this->category)->headline()->toString();
+    }
+
+    public function statusBadgeVariant(): string
+    {
+        return match ($this->status) {
+            self::STATUS_OPEN => 'info',
+            self::STATUS_IN_PROGRESS => 'warning',
+            self::STATUS_RESOLVED => 'success',
+            self::STATUS_CLOSED => 'secondary',
+            default => 'outline',
+        };
+    }
+
+    public function priorityBadgeVariant(): string
+    {
+        return match ($this->priority) {
+            self::PRIORITY_URGENT => 'danger',
+            self::PRIORITY_HIGH => 'warning',
+            self::PRIORITY_MEDIUM => 'info',
+            self::PRIORITY_LOW => 'secondary',
+            default => 'outline',
+        };
+    }
 }

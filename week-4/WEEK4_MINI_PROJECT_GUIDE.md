@@ -87,6 +87,68 @@ flowchart TD
 - `StoreTicketRequest`
 - `UpdateTicketRequest`
 
+## UI Component Layer
+The Week 4 interface uses shadcn-inspired Blade components instead of placing raw HTML and styles everywhere.
+
+The goal is the same idea used by shadcn/ui:
+- reusable UI primitives
+- variant-based components
+- consistent design tokens
+- accessible form controls
+- clean page templates
+
+Component files are stored in:
+```text
+resources/views/components/ui
+```
+
+Main components:
+- `x-ui.button`
+- `x-ui.card`
+- `x-ui.badge`
+- `x-ui.input`
+- `x-ui.select`
+- `x-ui.textarea`
+- `x-ui.label`
+- `x-ui.field-error`
+- `x-ui.alert`
+- `x-ui.stat-card`
+- `x-ui.page-header`
+
+Example:
+```blade
+<x-ui.button href="{{ route('tickets.create') }}">
+    New Ticket
+</x-ui.button>
+```
+
+This keeps the views beginner-friendly because the page describes intent instead of repeating long class lists.
+
+## Styling System
+The design tokens live in:
+```text
+resources/css/app.css
+```
+
+Important token groups:
+- background and foreground colors
+- card colors
+- primary and secondary actions
+- destructive actions
+- borders, inputs, and focus ring
+
+This gives the project a production-style design foundation. If the brand changes later, the main colors can be changed from one place instead of editing every page.
+
+## Readability Decisions
+Display formatting was moved into the `Ticket` model:
+- `statusLabel()`
+- `priorityLabel()`
+- `categoryLabel()`
+- `statusBadgeVariant()`
+- `priorityBadgeVariant()`
+
+This keeps Blade files clean. The views do not need to know how to convert `in_progress` into `In Progress`, or which badge color belongs to each status.
+
 ## Validation
 Important rules:
 - title must be meaningful
@@ -129,5 +191,7 @@ cd "/Users/aselinuke/Desktop/Assessment plan/week-4"
 php artisan migrate:fresh --force
 php artisan storage:link
 php artisan test
+npm install
+npm run build
 php artisan serve --host=127.0.0.1 --port=8001
 ```

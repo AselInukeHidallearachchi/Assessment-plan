@@ -1,72 +1,102 @@
 @extends('layouts.app', ['title' => 'Tickets'])
 
 @section('content')
-    <div class="between" style="margin-bottom: 16px;">
-        <div>
-            <h1 style="margin:0;">Ticket Queue</h1>
-            <div class="subtle">Track issues from intake to resolution.</div>
-        </div>
-        <a class="btn btn-primary" href="{{ route('tickets.create') }}">New Ticket</a>
-    </div>
+    <x-ui.page-header
+        title="Ticket Queue"
+        description="Track support requests from intake to resolution with clear ownership and status visibility."
+    >
+        <x-ui.button href="{{ route('tickets.create') }}">New Ticket</x-ui.button>
+    </x-ui.page-header>
 
-    <section class="grid">
-        <div class="stat"><span class="subtle">Open</span><strong>{{ $stats['open'] }}</strong></div>
-        <div class="stat"><span class="subtle">In Progress</span><strong>{{ $stats['in_progress'] }}</strong></div>
-        <div class="stat"><span class="subtle">Urgent</span><strong>{{ $stats['urgent'] }}</strong></div>
-        <div class="stat"><span class="subtle">Resolved</span><strong>{{ $stats['resolved'] }}</strong></div>
+    <section class="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <x-ui.stat-card label="Open" :value="$stats['open']" tone="info" />
+        <x-ui.stat-card label="In Progress" :value="$stats['in_progress']" tone="warning" />
+        <x-ui.stat-card label="Urgent" :value="$stats['urgent']" tone="default" />
+        <x-ui.stat-card label="Resolved" :value="$stats['resolved']" tone="success" />
     </section>
 
-    <form class="panel row" method="get" action="{{ route('tickets.index') }}" style="margin-bottom: 16px;">
-        <input name="q" placeholder="Search title or requester" value="{{ request('q') }}" style="max-width: 280px;">
-        <select name="status" style="max-width: 180px;">
-            <option value="">All statuses</option>
-            @foreach ($statuses as $status)
-                <option value="{{ $status }}" @selected(request('status') === $status)>{{ strtoupper(str_replace('_', ' ', $status)) }}</option>
-            @endforeach
-        </select>
-        <select name="priority" style="max-width: 180px;">
-            <option value="">All priorities</option>
-            @foreach ($priorities as $priority)
-                <option value="{{ $priority }}" @selected(request('priority') === $priority)>{{ strtoupper($priority) }}</option>
-            @endforeach
-        </select>
-        <button class="btn" type="submit">Filter</button>
-        <a class="btn" href="{{ route('tickets.index') }}">Reset</a>
-    </form>
+    <x-ui.card class="mb-6">
+        <x-ui.card-content class="pt-6">
+            <form class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_180px_180px_auto_auto]" method="get" action="{{ route('tickets.index') }}">
+                <x-ui.input name="q" placeholder="Search title, requester, or email" value="{{ request('q') }}" />
 
-    <section class="panel">
-        <table>
-            <thead>
-            <tr>
-                <th>Ticket</th>
-                <th>Requester</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Due</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @forelse ($tickets as $ticket)
+                <x-ui.select name="status">
+                    <option value="">All statuses</option>
+                    @foreach ($statuses as $status)
+                        <option value="{{ $status }}" @selected(request('status') === $status)>
+                            {{ str($status)->replace('_', ' ')->headline() }}
+                        </option>
+                    @endforeach
+                </x-ui.select>
+
+                <x-ui.select name="priority">
+                    <option value="">All priorities</option>
+                    @foreach ($priorities as $priority)
+                        <option value="{{ $priority }}" @selected(request('priority') === $priority)>
+                            {{ str($priority)->headline() }}
+                        </option>
+                    @endforeach
+                </x-ui.select>
+
+                <x-ui.button type="submit" variant="secondary">Filter</x-ui.button>
+                <x-ui.button href="{{ route('tickets.index') }}" variant="outline">Reset</x-ui.button>
+            </form>
+        </x-ui.card-content>
+    </x-ui.card>
+
+    <x-ui.card class="overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="ticket-table">
+                <thead>
                 <tr>
-                    <td>
-                        <strong>{{ $ticket->title }}</strong>
-                        <div class="subtle">{{ strtoupper($ticket->category) }}</div>
-                    </td>
-                    <td>{{ $ticket->requester_name }}</td>
-                    <td><span class="badge">{{ strtoupper($ticket->priority) }}</span></td>
-                    <td><span class="badge">{{ strtoupper(str_replace('_', ' ', $ticket->status)) }}</span></td>
-                    <td>{{ optional($ticket->due_date)->format('Y-m-d') ?: 'Not set' }}</td>
-                    <td class="row">
-                        <a class="btn" href="{{ route('tickets.show', $ticket) }}">View</a>
-                        <a class="btn" href="{{ route('tickets.edit', $ticket) }}">Edit</a>
-                    </td>
+                    <th>Ticket</th>
+                    <th>Requester</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Due</th>
+                    <th class="w-44">Actions</th>
                 </tr>
-            @empty
-                <tr><td colspan="6" class="subtle">No tickets found.</td></tr>
-            @endforelse
-            </tbody>
-        </table>
-        <div style="margin-top: 14px;">{{ $tickets->links() }}</div>
-    </section>
+                </thead>
+                <tbody>
+                @forelse ($tickets as $ticket)
+                    <tr>
+                        <td>
+                            <p class="font-bold text-foreground">{{ $ticket->title }}</p>
+                            <p class="mt-1 text-sm text-muted-foreground">{{ $ticket->categoryLabel() }}</p>
+                        </td>
+                        <td>
+                            <p class="font-medium text-foreground">{{ $ticket->requester_name }}</p>
+                            <p class="mt-1 text-sm text-muted-foreground">{{ $ticket->requester_email }}</p>
+                        </td>
+                        <td>
+                            <x-ui.badge variant="{{ $ticket->priorityBadgeVariant() }}">{{ $ticket->priorityLabel() }}</x-ui.badge>
+                        </td>
+                        <td>
+                            <x-ui.badge variant="{{ $ticket->statusBadgeVariant() }}">{{ $ticket->statusLabel() }}</x-ui.badge>
+                        </td>
+                        <td class="text-sm text-muted-foreground">
+                            {{ optional($ticket->due_date)->format('Y-m-d') ?: 'Not set' }}
+                        </td>
+                        <td>
+                            <div class="flex flex-wrap gap-2">
+                                <x-ui.button href="{{ route('tickets.show', $ticket) }}" variant="outline" size="sm">View</x-ui.button>
+                                <x-ui.button href="{{ route('tickets.edit', $ticket) }}" variant="secondary" size="sm">Edit</x-ui.button>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center text-sm text-muted-foreground">
+                            No tickets found. Create a new ticket or reset the filters.
+                        </td>
+                    </tr>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <div class="border-t border-border px-6 py-4">
+            {{ $tickets->links() }}
+        </div>
+    </x-ui.card>
 @endsection
