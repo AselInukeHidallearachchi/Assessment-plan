@@ -1,4 +1,4 @@
-# Assessment Plan (Week 1 - Week 3)
+# Assessment Plan (Week 1 - Week 4)
 
 This repository contains deliverables for the **One Month Performance Improvement Plan**.
 
@@ -51,6 +51,24 @@ Primary files:
 - `week-2/resources/views/products/`
 - `week-2/WEEK3_PERFORMANCE_ERROR_HANDLING_GUIDE.md`
 
+### Week 4 - Independent Mini Project (Completed)
+Deliverables completed:
+- New Laravel mini project created in `week-4/`
+- Support Desk ticket tracker implemented end-to-end
+- Ticket CRUD, dashboard counts, filters, status workflow, and attachment upload
+- Validation handled through Form Requests
+- Controller, handler, and service layers separated
+- Feature tests added and passing
+
+Primary files:
+- `week-4/app/Http/Controllers/TicketController.php`
+- `week-4/app/Handlers/Tickets/TicketHandler.php`
+- `week-4/app/Services/TicketService.php`
+- `week-4/app/Http/Requests/StoreTicketRequest.php`
+- `week-4/app/Http/Requests/UpdateTicketRequest.php`
+- `week-4/tests/Feature/TicketWorkflowTest.php`
+- `week-4/WEEK4_MINI_PROJECT_GUIDE.md`
+
 ## Week 2 Run Instructions
 
 ```bash
@@ -71,11 +89,24 @@ cd "/Users/aselinuke/Desktop/Assessment plan/week-2"
 php artisan test
 ```
 
+## Week 4 Run Instructions
+
+```bash
+cd "/Users/aselinuke/Desktop/Assessment plan/week-4"
+php artisan migrate:fresh --force
+php artisan storage:link
+php artisan serve --host=127.0.0.1 --port=8001
+```
+
+Open:
+- `http://127.0.0.1:8001/tickets`
+
 ## Viva / Interview Preparation
 
 Comprehensive viva guide:
 - `week-2/WEEK2_VIVA_GUIDE.md`
 - `week-2/WEEK3_PERFORMANCE_ERROR_HANDLING_GUIDE.md`
+- `week-4/WEEK4_MINI_PROJECT_GUIDE.md`
 
 This includes:
 - Architecture explanations
