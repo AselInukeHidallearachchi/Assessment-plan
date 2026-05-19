@@ -12,7 +12,7 @@
         {{ $triggerLabel }}
     </x-ui.button>
 
-    <dialog id="{{ $id }}" class="w-[min(92vw,28rem)] rounded-3xl border border-border bg-card p-0 text-card-foreground shadow-2xl backdrop:bg-slate-950/55">
+    <dialog id="{{ $id }}" class="fixed inset-0 m-auto w-[min(92vw,28rem)] rounded-3xl border border-border bg-card p-0 text-card-foreground shadow-2xl backdrop:bg-slate-950/55">
         <form method="post" action="{{ $action }}">
             @csrf
             @method('DELETE')
