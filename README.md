@@ -77,18 +77,6 @@ flowchart TD
     I --> J
 ```
 
-### Important Week 2 Files
-- `week-2/app/Http/Controllers/ProductController.php`
-- `week-2/app/Handlers/Products/ProductHandler.php`
-- `week-2/app/Services/ProductService.php`
-- `week-2/app/Http/Requests/StoreProductRequest.php`
-- `week-2/app/Http/Requests/UpdateProductRequest.php`
-- `week-2/app/Models/Product.php`
-- `week-2/resources/views/products/`
-- `week-2/resources/views/components/ui/`
-- `week-2/tests/Feature/ProductCrudTest.php`
-- `week-2/README.md`
-
 ### Week 2 UI Work
 The Week 2 UI uses reusable Blade components inspired by shadcn/ui patterns:
 - `x-ui.button`
@@ -111,12 +99,6 @@ Status: Completed inside `week-2/`
 - File upload handling
 - Basic performance optimization
 
-### Important Week 3 Files
-- `week-2/app/Exceptions/ProductOperationException.php`
-- `week-2/app/Services/ProductService.php`
-- `week-2/app/Handlers/Products/ProductHandler.php`
-- `week-2/database/migrations/2026_05_12_090000_add_image_path_to_products_table.php`
-- `week-2/tests/Feature/ProductCrudTest.php`
 
 ## Week 4 - Independent Mini Project
 Status: Completed
